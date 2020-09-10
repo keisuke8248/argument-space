@@ -7,5 +7,5 @@
   = f.fields_for :comments do |comment|
     = comment.text_field :text, placeholder: '本文'
   = f.fields_for :images do |image|
-    = image.file_field :image
+    = image.file_field :src
   = f.submit '送信する'

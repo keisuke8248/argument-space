@@ -1,6 +1,6 @@
 class Image < ApplicationRecord
-  belongs_to :comment, inverse_of: :images
-  belongs_to :group, inverse_of: :images
+  belongs_to :comment
+  belongs_to :group
 
-  mount_uploader :image, ImageUploader
+  mount_uploader :src, ImageUploader
 end

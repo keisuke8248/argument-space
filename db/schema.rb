@@ -14,8 +14,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_024021) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text", null: false
-    t.string "image"
-    t.integer "group_id", null: false
+    t.integer "group_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -28,6 +27,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_024021) do
 
   create_table "images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "image"
+    t.string "src"
     t.integer "comment_id"
     t.integer "group_id"
     t.datetime "created_at", null: false
