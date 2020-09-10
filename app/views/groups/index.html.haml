@@ -1,0 +1,11 @@
+- @groups.each do |group|
+  = link_to "#{group.title}", group_path(group.id)
+
+新規スレッド作成
+= form_with model: @group do |f|
+  = f.text_field :title, placeholder: 'スレッドタイトル'
+  = f.fields_for :comments do |comment|
+    = comment.text_field :text, placeholder: '本文'
+  = f.fields_for :images do |image|
+    = image.file_field :image
+  = f.submit '送信する'
