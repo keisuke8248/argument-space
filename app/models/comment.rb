@@ -1,6 +1,5 @@
 class Comment < ApplicationRecord
-  belongs_to :group, inverse_of: :comments
-  has_many :images
+  belongs_to :group
 
   validates :text, presence: true, length: {maximum: 100}
 

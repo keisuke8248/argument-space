@@ -4,7 +4,7 @@ class GroupsController < ApplicationController
     @groups = Group.all
     @group = Group.new
     @group.comments.build
-    @group.images.build
+    @group.group_images.build
   end
 
   def new
@@ -26,6 +26,6 @@ class GroupsController < ApplicationController
   def group_params
     params.require(:group).permit( :title,
                                   comments_attributes: [:id, :group_id, :text],
-                                  images_attributes: [:id, :group_id, :src])
+                                  group_images_attributes: [:src])
   end
 end

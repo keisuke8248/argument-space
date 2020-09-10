@@ -1,6 +1,5 @@
-class Image < ApplicationRecord
-  belongs_to :comment
+class GroupImage < ApplicationRecord
   belongs_to :group
-
   mount_uploader :src, ImageUploader
+
 end

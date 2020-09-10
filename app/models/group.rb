@@ -1,8 +1,8 @@
 class Group < ApplicationRecord
   has_many :comments
-  has_many :images
+  has_many :group_images
   accepts_nested_attributes_for :comments
-  accepts_nested_attributes_for :images
+  accepts_nested_attributes_for :group_images
 
   validates :title, presence: true, length: {maximum: 30}
 
