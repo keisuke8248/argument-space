@@ -1,0 +1,13 @@
+= @title ##スレタイ
+= @comments.first.text ## >>1のコメント
+- @group_images.each do |i|
+  = image_tag i.src.to_s ## >>1の画像
+- @comments.drop(1).each do |c| ## >>2以降のコメント
+  = c.text.to_s
+  = image_tag c.comment_images.src.to_s if c.comment_images.present?
+
+= form_with model: [@group, @comment] do |f|
+  = f.text_field :text
+  = f.fields_for :comment_images do |f|
+    = f.file_field :src
+  = f.submit "投稿"
