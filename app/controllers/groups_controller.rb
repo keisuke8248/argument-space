@@ -30,7 +30,10 @@ class GroupsController < ApplicationController
   
   def group_params
     params.require(:group).permit( :title,
-                                  comments_attributes: [:id, :group_id, :text],
-                                  group_images_attributes: [:src])
+                                  group_images_attributes: [:src]).reverse_merge(user_id: current_user.id,
+                                                                                 comments_attributes: [user_id: current_user.id,
+                                                                                                       text: params[:group][:comments_attributes][:"0"][:text]])
   end
 end
+
+#params.require(:task).permit(:summary, comments_attributes: [:id, :content]).reverse_merge(user_id: current_user.id, comments_attributes: [user_id: current_user.id, project_id: project.id])

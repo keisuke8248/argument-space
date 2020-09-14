@@ -1,7 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :group
-
-  #accepts_nested_attributes_for :comment_images
+  belongs_to :user
 
   validates :text, presence: true, length: {maximum: 100}
 
