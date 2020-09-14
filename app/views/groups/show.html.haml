@@ -3,8 +3,8 @@
 - @group.group_images.each do |i|
   = image_tag i.src.to_s
 - @comments.drop(1).each do |c|
-  = c.text
-.comments
+  = c.text, class: "comments"
+.comment
 
 = form_with model: @comment, local: true, id: "new_comment" do |f|
   = f.text_area :text, placeholder: "テキストを入力してください", class: "textarea"

@@ -17,7 +17,7 @@ $(function(){
     })
     .done(function(data){
       let html = buildHTML(data);
-      $('.comments').append(html);
+      $('.comment').append(html);
       $('.textarea').val('');
       $('.submit').prop('disabled', false);
     })
