@@ -6,24 +6,22 @@ class CommentsController < ApplicationController
     @comments = Comment.where(group_id: params[:group_id])
     @group = Group.find(params[:group_id])
     @comment = Comment.new
-    @comment.comment_images.build
+    #@comment.comment_images.build
   end
 
   def create
     @comment = Comment.new(comment_params)
     #binding.pry
-    if @comment.save
-      redirect_to group_comments_path(params[:group_id])
-    else
-      redirect_to root_path
+    @comment.save
+    respond_to do |format|
+      format.html { redirect_to group_path(params[:comment][:id])}
+      format.json
     end
   end
 
   private
 
   def comment_params
-    params.require(:comment).permit( :text, :group_id,
-                             comment_images_attributes: [:src]).merge(group_id: params[:group_id])
+    params.require(:comment).permit(:text).merge(group_id: params[:comment][:id])
   end
-
 end

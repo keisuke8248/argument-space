@@ -13,6 +13,10 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
+    @comments = @group.comments
+    @group_image = @group.group_images
+    @comment = Comment.new
+    #@comment.comment_images.build
   end
 
   def create
