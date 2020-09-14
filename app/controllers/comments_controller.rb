@@ -22,6 +22,7 @@ class CommentsController < ApplicationController
   private
 
   def comment_params
-    params.require(:comment).permit(:text).merge(group_id: params[:comment][:id])
+    params.require(:comment).permit(:text).merge(group_id: params[:comment][:id],
+                                                 user_id: current_user.id)
   end
 end
