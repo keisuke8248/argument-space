@@ -1,12 +1,4 @@
 class CommentsController < ApplicationController
-  def index
-    comment = Comment.find_by(group_id: params[:group_id])
-    @title = comment.group.title
-    @group_images = comment.group.group_images
-    @comments = Comment.where(group_id: params[:group_id])
-    @group = Group.find(params[:group_id])
-    @comment = Comment.new
-  end
 
   def create
     @comment = Comment.new(comment_params)
@@ -14,16 +6,6 @@ class CommentsController < ApplicationController
     @comment.save
     respond_to do |format|
       format.html { redirect_to group_path(params[:comment][:id])}
-      format.json
-    end
-  end
-
-  def update
-    #binding.pry
-    comment = Comment.find(params[:id])
-    comment.increment!(:vote, 1)
-    respond_to do |format|
-      format.html { redirect_to group_path(params[:comment][:group_id])}
       format.json
     end
   end
