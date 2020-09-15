@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
   def index
-    @groups = Group.all
+    @groups = Group.all.includes(:comments)
     @group = Group.new
     @group.comments.build
     @group.group_images.build
@@ -16,7 +16,8 @@ class GroupsController < ApplicationController
     @comments = @group.comments
     @group_image = @group.group_images
     @comment = Comment.new
-    #@comment.comment_images.build
+    @favorite = Favorite.new
+
   end
 
   def create
@@ -35,5 +36,3 @@ class GroupsController < ApplicationController
                                                                                                        text: params[:group][:comments_attributes][:"0"][:text]])
   end
 end
-
-#params.require(:task).permit(:summary, comments_attributes: [:id, :content]).reverse_merge(user_id: current_user.id, comments_attributes: [user_id: current_user.id, project_id: project.id])

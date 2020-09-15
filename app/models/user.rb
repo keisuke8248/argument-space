@@ -6,6 +6,7 @@ class User < ApplicationRecord
 
   has_many :comments
   has_many :groups
+  has_many :favorites
 
   validates :nickname, presence: true, length: {maximum: 8}
   validates :email, presence: true

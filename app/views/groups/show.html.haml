@@ -1,10 +1,16 @@
 = @group.title
+= @group.text if @group.text.present?
 = @group.user.nickname
 = @comments.first.text
 - @group.group_images.each do |i|
   = image_tag i.src.to_s
-- @comments.drop(1).each do |c|
-  = c.text
+
+- @comments.zip(@comments.ids) do |comment, id|
+  = comment.text
+  = form_with model: @favorite, local: true, id: "vote" do |f|
+    = f.hidden_field :user_id, value: current_user.id
+    = f.hidden_field :comment_id, value: id
+    = f.submit "投票する", class: "submit_vote"
 .comments
 
 = form_with model: @comment, local: true, id: "new_comment" do |f|

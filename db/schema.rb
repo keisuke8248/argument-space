@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_10_095751) do
+ActiveRecord::Schema.define(version: 2020_09_14_122622) do
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text", null: false
@@ -20,6 +20,16 @@ ActiveRecord::Schema.define(version: 2020_09_10_095751) do
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_comments_on_group_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "vote", default: 1, null: false, unsigned: true
+    t.bigint "comment_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["comment_id"], name: "index_favorites_on_comment_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
   end
 
   create_table "group_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -32,6 +42,7 @@ ActiveRecord::Schema.define(version: 2020_09_10_095751) do
 
   create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
+    t.string "text"
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -53,6 +64,8 @@ ActiveRecord::Schema.define(version: 2020_09_10_095751) do
 
   add_foreign_key "comments", "groups"
   add_foreign_key "comments", "users"
+  add_foreign_key "favorites", "comments"
+  add_foreign_key "favorites", "users"
   add_foreign_key "group_images", "groups"
   add_foreign_key "groups", "users"
 end

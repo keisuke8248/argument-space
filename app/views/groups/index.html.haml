@@ -4,7 +4,8 @@
 
 新規スレッド作成
 = form_with model: @group do |f|
-  = f.text_field :title, placeholder: 'スレッドタイトル'
+  = f.text_field :title, placeholder: 'お題'
+  = f.text_area :text, placeholder: 'コメント（任意）'
   = f.fields_for :comments do |c|
     = c.text_field :text, placeholder: '本文'
   = f.fields_for :group_images do |i|
