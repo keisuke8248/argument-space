@@ -2,7 +2,6 @@ class CommentsController < ApplicationController
 
   def create
     @comment = Comment.new(comment_params)
-    #binding.pry
     @comment.save
     respond_to do |format|
       format.html { redirect_to group_path(params[:comment][:id])}

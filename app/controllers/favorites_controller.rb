@@ -2,16 +2,27 @@ class FavoritesController < ApplicationController
   before_action :set_params
 
   def create
-    favorite = Favorite.find_by(user_id: @user, comment_id: @comment)
-    unless favorite.present?
-      favorite = Favorite.new(favorite_params)
-      favorite.save
+    @favorite = Favorite.find_by(user_id: @user, comment_id: @comment)
+    unless @favorite.present?
+      @favorite = Favorite.new(favorite_params)
+      @favorite.save
     else
-      favorite.increment!(:vote, 1)
+      @favorite.increment!(:vote, 1)
+    end
+   #@favorite.vote
+    #binding.pry
+    group_id = Comment.find(@comment).group.id
+    respond_to do |format|
+      ##format.html { redirect_to group_path(group_id) }
+      format.json
     end
     #json形式で返すよう実装する予定
     #voteカラムの値をjbuilderに渡してビュー構築の条件分岐をしたい
   end
+
+  def api
+  end
+
 
 
   private

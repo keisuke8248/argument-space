@@ -1,6 +1,6 @@
 class Group < ApplicationRecord
-  has_many :comments
-  has_many :group_images
+  has_many :comments, dependent: :destroy
+  has_many :group_images, dependent: :destroy
   belongs_to :user
   accepts_nested_attributes_for :comments
   accepts_nested_attributes_for :group_images

@@ -7,7 +7,7 @@
   = f.text_field :title, placeholder: 'お題'
   = f.text_area :text, placeholder: 'コメント（任意）'
   = f.fields_for :comments do |c|
-    = c.text_field :text, placeholder: '本文'
+    = c.text_field :text, placeholder: '出題者の回答'
   = f.fields_for :group_images do |i|
     = i.file_field :src
   = f.submit '送信する'

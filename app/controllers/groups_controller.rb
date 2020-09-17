@@ -1,7 +1,7 @@
 class GroupsController < ApplicationController
 
   def index
-    @groups = Group.all.includes(:comments)
+    @groups = Group.all.includes(:user)
     @group = Group.new
     @group.comments.build
     @group.group_images.build
@@ -13,7 +13,7 @@ class GroupsController < ApplicationController
 
   def show
     @group = Group.find(params[:id])
-    @comments = @group.comments
+    @comments = @group.comments.includes(:user)
     @group_image = @group.group_images
     @comment = Comment.new
     @favorite = Favorite.new
@@ -22,9 +22,14 @@ class GroupsController < ApplicationController
 
   def create
     @group = Group.new(group_params)
-    #binding.pry
     @group.save
     redirect_to root_path
+  end
+
+  def api
+    @group = Group.find(params[:id])
+    last_comments_id = params[:id]
+    @comments = @group.comments.includes(:user)
   end
 
   private
