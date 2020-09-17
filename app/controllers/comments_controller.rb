@@ -4,7 +4,7 @@ class CommentsController < ApplicationController
     @comment = Comment.new(comment_params)
     @comment.save
     respond_to do |format|
-      format.html { redirect_to group_path(params[:comment][:id])}
+      ##format.html { redirect_to group_path(params[:comment][:id])}
       format.json
     end
   end

@@ -8,12 +8,12 @@ $(function(){
                     <input name="utf8" type="hidden" value="✓"></input>
                     <input value="${comment.user_id}" type="hidden" name="favorite[user_id]" id="favorite_user_id"></input>
                     <input value="${comment.id}" type="hidden" name="favorite[comment_id]" id="favorite_comment_id"></input>
-                    <input type="submit_comment" name="commit" value="投票する" class="submit_vote" data-disable-with="投票する"></input>
+                    <input type="submit" name="commit" value="投票する" class="submit_vote" data-disable-with="投票する"></input>
                   </form>
                 </p>`
     return html;
   }
-  $('#new_comment').on('submit_comment', function(e){
+  $('#new_comment').on('submit', function(e){
     e.preventDefault();
     let formData = new FormData(this);
     let url = $(this).attr('action');
@@ -50,5 +50,8 @@ $(function(){
         insertHTML += buildHTML(comment);
       });
     })
-  }
+    .fail(function(){
+      arert('error');
+    })
+  };
 });

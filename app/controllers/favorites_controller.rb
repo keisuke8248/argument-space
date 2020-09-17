@@ -3,7 +3,7 @@ class FavoritesController < ApplicationController
 
   def create
     @favorite = Favorite.find_by(user_id: @user, comment_id: @comment)
-    unless @favorite.present?
+    if @favorite.blank?
       @favorite = Favorite.new(favorite_params)
       @favorite.save
     else
@@ -13,7 +13,7 @@ class FavoritesController < ApplicationController
     #binding.pry
     group_id = Comment.find(@comment).group.id
     respond_to do |format|
-      ##format.html { redirect_to group_path(group_id) }
+      format.html { redirect_to group_path(group_id) }
       format.json
     end
     #json形式で返すよう実装する予定

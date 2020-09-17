@@ -18,5 +18,8 @@ $(function(){
       vote_count.html(data.vote);
       $('.submit_vote').prop('disabled', false);
     })
+    .fail(function(){
+      arert('error');
+    })
   });
 });
