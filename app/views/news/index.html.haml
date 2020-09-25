@@ -1,0 +1,6 @@
+- categoryArray.zip(0..5) do |category, i|
+  = link_to category, news_path(i)
+
+- @news.each do |n|
+  = link_to n.title, n.url.to_s
+  = image_tag n.urlToImage.to_s

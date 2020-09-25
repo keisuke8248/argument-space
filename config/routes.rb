@@ -12,4 +12,5 @@ Rails.application.routes.draw do
       post :api, defaults: { format: 'json' }
     end
   end
+  resources :news, only: [:index, :show]
 end
