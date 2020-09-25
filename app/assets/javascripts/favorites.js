@@ -3,8 +3,8 @@ $(function(){
     e.preventDefault();
     let formData = new FormData(this);
     let url = $(this).attr('action');
-    let comment_id = $(this).children('#favorite_comment_id').attr('value');
-    let user_id = $(this).children('#favorite_user_id').attr('val');
+    //let comment_id = $(this).children('#favorite_comment_id').attr('value');
+    //let user_id = $(this).children('#favorite_user_id').attr('val');
     $.ajax({
       url: url,
       type: "POST",

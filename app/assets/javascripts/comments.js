@@ -9,6 +9,7 @@ $(function(){
                     <input value="${comment.user_id}" type="hidden" name="favorite[user_id]" id="favorite_user_id"></input>
                     <input value="${comment.id}" type="hidden" name="favorite[comment_id]" id="favorite_comment_id"></input>
                     <input type="submit" name="commit" value="投票する" class="submit_vote" data-disable-with="投票する"></input>
+                    <div class="vote_count" data-comment-id="${comment.id}"></div>
                   </form>
                 </p>`
     return html;

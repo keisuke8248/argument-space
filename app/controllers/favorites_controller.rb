@@ -9,7 +9,6 @@ class FavoritesController < ApplicationController
     else
       @favorite.increment!(:vote, 1)
     end
-   #@favorite.vote
     #binding.pry
     group_id = Comment.find(@comment).group.id
     respond_to do |format|
