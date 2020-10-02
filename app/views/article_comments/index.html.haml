@@ -1,0 +1,17 @@
+= @article.title
+
+- if @comments.present?
+  - @comments.each do |c|
+    = c.text
+    = form_with url: good_evaluations_path do |f|
+      = f.hidden_field :article_id, value: c.article.id
+      = f.hidden_field :comment_id, value: c.id
+      = f.submit "good"
+    = form_with url: bad_evaluations_path do |f|
+      = f.hidden_field :article_id, value: c.article.id
+      = f.hidden_field :comment_id, value: c.id
+      = f.submit "bad"
+
+= form_with model:[@article, @article_comments] do |f|
+  = f.text_area :text, placeholder: "コメントを入力してください"
+  = f.submit "送信"

@@ -1,0 +1,14 @@
+.main
+  .showMain
+    .itemBox
+      .itemBox__top
+        - categoryArray.zip(0..5) do |category, i|
+          = link_to category, article_path(i)
+      .itemBox__news
+        - @news.each do |n|
+          .itemBox__news__title
+            = link_to n.title, n.url.to_s
+          .itemBox__news__image
+            = image_tag n.urlToImage.to_s
+          .itemBox__news__comment
+            = link_to "コメント", article_article_comments_path(articleID(n))

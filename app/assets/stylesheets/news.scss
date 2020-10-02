@@ -1,3 +1,23 @@
-// Place all the styles related to the news controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.main {
+  width: 100%;
+  padding: 0 150px;
+}
+
+.showMain {
+  background-color: #fff;
+}
+
+.itemBox {
+  &__news {
+    &__title {
+      width: 300px;
+    }
+    &__image {
+    }
+  }
+}

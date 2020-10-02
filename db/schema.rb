@@ -10,7 +10,24 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_09_14_122622) do
+ActiveRecord::Schema.define(version: 2020_10_01_103944) do
+
+  create_table "article_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "text", null: false
+    t.bigint "article_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_id"], name: "index_article_comments_on_article_id"
+    t.index ["user_id"], name: "index_article_comments_on_user_id"
+  end
+
+  create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.string "title", null: false
+    t.string "url", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text", null: false
@@ -20,6 +37,19 @@ ActiveRecord::Schema.define(version: 2020_09_14_122622) do
     t.datetime "updated_at", null: false
     t.index ["group_id"], name: "index_comments_on_group_id"
     t.index ["user_id"], name: "index_comments_on_user_id"
+  end
+
+  create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.integer "good", default: 0, null: false
+    t.integer "bad", default: 0, null: false
+    t.bigint "article_id"
+    t.bigint "article_comment_id"
+    t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["article_comment_id"], name: "index_evaluations_on_article_comment_id"
+    t.index ["article_id"], name: "index_evaluations_on_article_id"
+    t.index ["user_id"], name: "index_evaluations_on_user_id"
   end
 
   create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -62,8 +92,13 @@ ActiveRecord::Schema.define(version: 2020_09_14_122622) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "article_comments", "articles"
+  add_foreign_key "article_comments", "users"
   add_foreign_key "comments", "groups"
   add_foreign_key "comments", "users"
+  add_foreign_key "evaluations", "article_comments"
+  add_foreign_key "evaluations", "articles"
+  add_foreign_key "evaluations", "users"
   add_foreign_key "favorites", "comments"
   add_foreign_key "favorites", "users"
   add_foreign_key "group_images", "groups"

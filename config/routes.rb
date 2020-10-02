@@ -12,5 +12,13 @@ Rails.application.routes.draw do
       post :api, defaults: { format: 'json' }
     end
   end
-  resources :news, only: [:index, :show]
+  resources :articles, only: [:index, :show] do
+    resources :article_comments, only: [:index, :create]
+  end
+  resources :evaluations do
+    collection do 
+      post :good
+      post :bad
+    end
+  end
 end
