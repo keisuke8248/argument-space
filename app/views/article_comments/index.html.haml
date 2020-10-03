@@ -1,7 +1,6 @@
 = @article.title
 = link_to @article.url
 
-//article_comment_id(c.article_id, id)
 - if @comments.present?
   - @comments.zip(@comments.ids) do |c, id|
     .comment{data: {comment: {id: id}}}
