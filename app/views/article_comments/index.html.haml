@@ -1,17 +1,21 @@
 = @article.title
+= link_to @article.url
 
+//article_comment_id(c.article_id, id)
 - if @comments.present?
-  - @comments.each do |c|
-    = c.text
-    = form_with url: good_evaluations_path do |f|
-      = f.hidden_field :article_id, value: c.article.id
-      = f.hidden_field :comment_id, value: c.id
-      = f.submit "good"
-    = form_with url: bad_evaluations_path do |f|
-      = f.hidden_field :article_id, value: c.article.id
-      = f.hidden_field :comment_id, value: c.id
-      = f.submit "bad"
+  - @comments.zip(@comments.ids) do |c, id|
+    .comment{data: {comment: {id: id}}}
+      = c.text
+      = form_with url: good_evaluations_path do |f|
+        = f.hidden_field :article_id, value: c.article.id
+        = f.hidden_field :comment_id, value: id
+        = f.submit "good"
+      = form_with url: bad_evaluations_path do |f|
+        = f.hidden_field :article_id, value: c.article.id
+        = f.hidden_field :comment_id, value: id
+        = f.submit "bad"
+.new_comment
 
-= form_with model:[@article, @article_comments] do |f|
-  = f.text_area :text, placeholder: "コメントを入力してください"
-  = f.submit "送信"
+= form_with model:[@article, @article_comments], local: true, id: "new_article_comment" do |f|
+  = f.text_area :text, placeholder: "コメントを入力してください", class: "textarea"
+  = f.submit "送信", class: "submit_comment"
