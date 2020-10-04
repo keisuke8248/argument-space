@@ -1,18 +1,22 @@
-= @article.title
-= link_to @article.url
+.title{data: {article: {id: @article.id}}}
+  = @article.title
+.url
+  = link_to @article.url
 
 - if @comments.present?
   - @comments.zip(@comments.ids) do |c, id|
     .comment{data: {comment: {id: id}}}
       = c.text
       = form_with url: good_evaluations_path do |f|
-        = f.hidden_field :article_id, value: c.article.id
+        = f.hidden_field :article_id, value: @article.id
         = f.hidden_field :comment_id, value: id
         = f.submit "good"
+        = counting_evaluation(@article.id, id, "good")
       = form_with url: bad_evaluations_path do |f|
-        = f.hidden_field :article_id, value: c.article.id
+        = f.hidden_field :article_id, value: @article.id
         = f.hidden_field :comment_id, value: id
         = f.submit "bad"
+        = counting_evaluation(@article.id, id, "bad")
 .new_comment
 
 = form_with model:[@article, @article_comments], local: true, id: "new_article_comment" do |f|

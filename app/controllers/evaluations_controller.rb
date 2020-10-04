@@ -20,8 +20,10 @@ class EvaluationsController < ApplicationController
                                   article_comment_id: params[:comment_id]
                                   )
       evaluation.save!
+      evaluation.increment!(key, 1)
     end
-    evaluation.increment!(key, 1)
+
   end
+    
 
 end
