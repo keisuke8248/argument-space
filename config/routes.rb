@@ -13,7 +13,11 @@ Rails.application.routes.draw do
     end
   end
   resources :articles, only: [:index, :show] do
-    resources :article_comments, only: [:index, :create]
+    resources :article_comments, only: [:index, :create] do
+      collection do
+        get :api, defaults: {format: 'json'}
+      end
+    end
   end
   resources :evaluations do
     collection do 

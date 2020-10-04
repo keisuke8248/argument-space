@@ -43,7 +43,7 @@ $(function(){
       url: "group/" +`${group_id}` + "/api",
       type: 'get',
       dataType: 'json',
-      data: {id: last_comment_id}
+      data: {last_comment_id: last_comment_id}
     })
     .done(function(comments){
       let insertHTML = "";
