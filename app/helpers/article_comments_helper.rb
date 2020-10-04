@@ -1,10 +1,4 @@
-module ArticleCommentsHelper
-  
-  def article_comment_id(article_id, comment_id)
-    array = ArticleComment.where(article_id: article_id)
-    return array.ids.index(comment_id)
-  end
-  
+module ArticleCommentsHelper  
 
   def counting_evaluation(article_id, comment_id, key)
     evaluation = Evaluation.where(article_id: article_id, article_comment_id: comment_id)
