@@ -1,22 +1,25 @@
 $(function(){
   function buildHTML(comment){
     let html = `<div class="comment" data-comment-id="${comment.id}">${comment.text}
-                  <form action="/evaluations/good" accept-charset="UTF-8" data-remote="true" method="post">
+                  <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
                     <input name="utf8" type="hidden" value="✓"></input>
                     <input value="${comment.article_id}" type="hidden" name="article_id" id="article_id"></input>
                     <input value="${comment.id}" type="hidden" name="comment_id" id="comment_id"></input>
-                    <input type="submit" name="commit" value="good" data-disable-with="good"></input>
+                    <input class="good_btn" type="submit" name="commit" value="good" data-disable-with="good"></input>
                   </form>
-                  <form action="/evaluations/bad" accept-charset="UTF-8" data-remote="true" method="post">
+                  <div class="count_good">0</div>
+                  <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
                     <input name="utf8" type="hidden" value="✓"></input>
                     <input value="${comment.article_id}" type="hidden" name="article_id" id="article_id"></input>
                     <input value="${comment.id}" type="hidden" name="comment_id" id="comment_id"></input>
-                    <input type="submit" name="commit" value="bad" data-disable-with="bad"></input>
+                    <input class="bad_btn" type="submit" name="commit" value="bad" data-disable-with="bad"></input>
                   </form>
+                  <div class="count_bad">0</div>
                 </div>`
     return html;
   }
-
+  
+  
   $('#new_article_comment').on('submit', function(e){
     e.preventDefault();
     let formData = new FormData(this);
@@ -63,12 +66,13 @@ $(function(){
       $.each(data, function(i, comment) {
         insertHTML += buildHTML(comment);
       });
-      //debugger;
       $('.new_comment').append(insertHTML);
     })
     .fail(function() {
       alert('error');
     });
   };
-  //setInterval(reloadComments, 7000);
+  if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
+    setInterval(reloadComments, 7000);
+  }
 });

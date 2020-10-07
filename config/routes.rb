@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   devise_for :users
-  root 'groups#index'
+  root 'articles#index'
   resources :groups, only: [:index, :show, :create] do
     member do
       get :api, defaults: { format: 'json' }
@@ -23,6 +23,8 @@ Rails.application.routes.draw do
     collection do 
       post :good
       post :bad
+      post :canceling_good
+      post :canceling_bad
     end
   end
 end

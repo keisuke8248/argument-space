@@ -7,7 +7,7 @@
       .itemBox__news
         - @news.each do |n|
           .itemBox__news__title
-            = link_to n.title, n.url.to_s
+            = link_to n.title, n.url.to_s, target: :_blank
           .itemBox__news__image
             = image_tag n.urlToImage.to_s
           .itemBox__news__comment

@@ -5,17 +5,34 @@
 
 - if @comments.present?
   - @comments.zip(@comments.ids) do |c, id|
+  - my_evaluation = my_evaluation(@article.id, id)
     .comment{data: {comment: {id: id}}}
       = c.text
-      = form_with url: good_evaluations_path do |f|
-        = f.hidden_field :article_id, value: @article.id
-        = f.hidden_field :comment_id, value: id
-        = f.submit "good"
+      - if my_evaluation != "good"
+        = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
+          = f.hidden_field :article_id, value: @article.id
+          = f.hidden_field :comment_id, value: id
+          = f.submit "good", class: "good_btn", disabled: (my_evaluation == "bad")
+      - else
+        = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
+          = f.hidden_field :article_id, value: @article.id
+          = f.hidden_field :comment_id, value: id
+          = f.submit "good", class: "canceling_good_btn"
+      .count_good
         = counting_evaluation(@article.id, id, "good")
-      = form_with url: bad_evaluations_path do |f|
-        = f.hidden_field :article_id, value: @article.id
-        = f.hidden_field :comment_id, value: id
-        = f.submit "bad"
+      
+      - if my_evaluation != "bad"
+        = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
+          = f.hidden_field :article_id, value: @article.id
+          = f.hidden_field :comment_id, value: id
+          = f.submit "bad", class: "bad_btn", disabled: (my_evaluation == "good")
+      - else
+        = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
+          = f.hidden_field :article_id, value: @article.id
+          = f.hidden_field :comment_id, value: id
+          = f.submit "bad", class: "canceling_bad_btn"
+
+      .count_bad
         = counting_evaluation(@article.id, id, "bad")
 .new_comment
 
