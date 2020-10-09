@@ -1,6 +1,6 @@
 $(function(){
   function buildHTML(comment){
-    let html = `<div class="comment" data-comment-id="${comment.id}">${comment.text}
+    let html = `<div class="comment" data-comment-id="${comment.id}">${comment.index}: ${comment.text}
                   <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
                     <input name="utf8" type="hidden" value="✓"></input>
                     <input value="${comment.article_id}" type="hidden" name="article_id" id="article_id"></input>
@@ -18,7 +18,6 @@ $(function(){
                 </div>`
     return html;
   }
-  
   
   $('#new_article_comment').on('submit', function(e){
     e.preventDefault();
@@ -45,16 +44,18 @@ $(function(){
       }
       
       $('.new_comment').append(insertHTML);
-      $('.textarea').val('');
+      $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
     })
     .fail(function(){
       alert('error');
     })
   })
+
+
   var reloadComments = function() {
     var last_comment_id = $('.comment:last').data("comment-id");
-    var article_id = $('.title').data("article-id");
+    var article_id = $('.article__title').data("article-id");
     $.ajax({
       url: "/articles/" + article_id + "/article_comments/api",
       type: 'get',
@@ -72,7 +73,52 @@ $(function(){
       alert('error');
     });
   };
+
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
-    setInterval(reloadComments, 7000);
+    //setInterval(reloadComments, 7000);
   }
+
+  $('.comment__index').on('click', function(){
+    var textarea = $('.text_area')
+    var index = $(this).data('index');
+    var inputVal = '>>' + `${index}` +'\n';
+    textarea.val(textarea.val() + inputVal);
+  });
+});
+
+$(function(){
+  var comment = $('.comment__text');
+  var length = comment.length;
+  //var sum = 0;
+  //var array = [];
+  for (var i=1; i<=length; i++) {
+    comment.each(function(I, e) {
+      var text = $(e).text();
+      var pattern = new RegExp(`>>${i}`);
+      var result = pattern.test(text);
+      if (result === true) {
+        var reply = $(`.comment__reply__content[data-index=${i}]`);
+        var comment = $(e).parent('.comment')
+        const appendComment = comment.clone();
+        reply.append(appendComment);
+        //sum++;
+      }
+    });
+  }
+
+  $(document).on('click','.comment__reply#hide', function() {
+    var reply = $(this).children('.comment__reply__content');
+    reply.show();
+    $(this).removeAttr('id');
+    $(this).attr('id', 'show');
+  })
+  $(document).on('click','.comment__reply#show', function(){
+    var reply = $(this).children('.comment__reply__content');
+    reply.hide();
+    $(this).removeAttr('id');
+    $(this).attr('id', 'hide');
+  });
+
+  console.log(array);
+
 });
