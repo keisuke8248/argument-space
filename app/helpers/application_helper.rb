@@ -18,15 +18,9 @@ module ApplicationHelper
     end
   end
 
-  def my_evaluation(article_id, comment_id)
-    evaluation = Evaluation.find_by(article_id: article_id, article_comment_id: comment_id, user_id: current_user.id)
-    if evaluation.blank?
-      return "blank"
-    elsif evaluation.good == 1
-      return "good"
-    elsif evaluation.bad == 1
-      return "bad"
-    end
+  def time_setting(date)
+    d = %w(日 月 火 水 木 金 土)[date.wday]
+    return date.strftime("%Y/%m/%d/#{d} %H:%M:%S")
   end
 
 end

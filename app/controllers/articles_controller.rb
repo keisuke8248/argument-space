@@ -4,9 +4,7 @@ class ArticlesController < ApplicationController
 
   def index
     @news = @News.get_top_headlines(country: 'jp')
-    @news.each do |n|
-      Article.createArticles(title: n.title, url: n.url)
-    end
+    create_articles
   end
 
   def show
@@ -14,7 +12,7 @@ class ArticlesController < ApplicationController
     @news = @News.get_top_headlines(country: 'jp',
                                     category: category[params[:id].to_i])
     @news.each do |n|
-      Article.createArticles(title: n.title, url: n.url)
+      Article.createArticles(title: n.title, url: n.url, description: n.description, author: n.autohr, publishedAt: n.publishedAt, urlToImage: n.urlToImage)
     end
   end
 
@@ -22,6 +20,12 @@ class ArticlesController < ApplicationController
 
   def set_secretKey
     @News = News.new(ENV['NEWS_API_PRIVATE_KEY'])
+  end
+  
+  def create_articles
+    @news.each do |n|
+      Article.createArticles(title: n.title, url: n.url, description: n.description, author: n.author, publishedAt: n.publishedAt, urlToImage: n.urlToImage)
+    end
   end
 
 end

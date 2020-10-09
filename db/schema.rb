@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2020_10_01_103944) do
 
   create_table "article_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text", null: false
+    t.integer "index"
     t.bigint "article_id"
     t.bigint "user_id"
     t.datetime "created_at", null: false
@@ -25,6 +26,10 @@ ActiveRecord::Schema.define(version: 2020_10_01_103944) do
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "title", null: false
     t.string "url", null: false
+    t.text "description"
+    t.string "author"
+    t.string "publishedAt"
+    t.string "urlToImage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

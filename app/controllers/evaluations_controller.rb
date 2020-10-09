@@ -28,8 +28,8 @@ class EvaluationsController < ApplicationController
   private
 
   def set_params
-    @article_id = params[:article_id].to_i
-    @comment_id = params[:comment_id].to_i
+    @article_id = params[:article_id]
+    @comment_id = params[:comment_id]
   end
 
   def format(sum, article_id, comment_id)
