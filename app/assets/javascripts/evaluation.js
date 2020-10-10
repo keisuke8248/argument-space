@@ -1,7 +1,7 @@
 $(function(){
 
   function buildHTML(data, Class1, Class2, value){
-    let comment = $(`.comment[data-comment-id=${data.comment_id}]`);
+    let comment = $(`.comment[data-comment-id=${data.comment_id}]`).not('.reply');
     let form = comment.find(`.evaluation_form_${Class1}`).first();
     let count_btn = comment.find(`.count_${value}`).first();
     
@@ -23,7 +23,7 @@ $(function(){
     form.removeClass().addClass(`evaluation_form_${Class2}`);
 
     if (Class1 === "good") {
-      var btn = comment.find('.bad_btn').firist();
+      var btn = comment.find('.bad_btn').first();
       btn.prop('disabled', true);
     }
     if (Class1  === "bad") {
@@ -31,7 +31,7 @@ $(function(){
       btn.prop('disabled', true);
     }
     if (Class1 === "canceling_good") {
-      var btn = comment.find('.bad_btn').firts();
+      var btn = comment.find('.bad_btn').first();
       btn.prop('disabled', false);
     }
     if (Class1 === "canceling_bad") {

@@ -1,23 +1,86 @@
 $(function(){
+  
   function buildHTML(comment){
-    let html = `<div class="comment" data-comment-id="${comment.id}">${comment.index}: ${comment.text}
-                  <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
-                    <input name="utf8" type="hidden" value="✓"></input>
-                    <input value="${comment.article_id}" type="hidden" name="article_id" id="article_id"></input>
-                    <input value="${comment.id}" type="hidden" name="comment_id" id="comment_id"></input>
-                    <input class="good_btn" type="submit" name="commit" value="good" data-disable-with="good"></input>
-                  </form>
-                  <div class="count_good">0</div>
-                  <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
-                    <input name="utf8" type="hidden" value="✓"></input>
-                    <input value="${comment.article_id}" type="hidden" name="article_id" id="article_id"></input>
-                    <input value="${comment.id}" type="hidden" name="comment_id" id="comment_id"></input>
-                    <input class="bad_btn" type="submit" name="commit" value="bad" data-disable-with="bad"></input>
-                  </form>
-                  <div class="count_bad">0</div>
-                </div>`
+
+      const html = `<div class="comment" data-comment-id=${comment.id}>
+                    <div class="comment__detail">
+                      <div class="comment__index" data-index="${comment.index}">
+                        ${comment.index}:
+                      </div>
+                      <div class="comment__detail__nickname">
+                        ${comment.nickname}
+                      </div>
+                      <div class="comment__detail__date">
+                        ${comment.date}
+                      </div>
+                    </div>
+                    <div class="comment__text" data-index=${comment.index}>
+                      ${comment.text}
+                    </div>
+                    <div class="comment__evaluation">
+                      <div class="comment__evaluation__form">
+                        <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
+                          <input name="utf8" type="hidden" value="✓"></input>
+                          <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
+                          <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
+                          <button name="button" type="submit" class="good_btn">
+                            <i class="fas fa-thumbs-up">
+                              <div class="fas fa-thumbs-up__letter">good</div>
+                            </i>
+                          </button>
+                        </form>
+                        <div class="count_good">
+                        0
+                        </div>
+                      </div>
+                      <div class="comment__evaluation__form">
+                        <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
+                          <input name="utf8" type="hidden" value="✓"></input>
+                          <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
+                          <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
+                          <button name="button" type="submit" class="bad_btn">
+                            <i class="fas fa-thumbs-down">
+                              <div class="fas fa-thumbs-down__letter">bad</div>
+                            </i>
+                          </button>
+                        </form>
+                        <div class="count_bad">
+                        0
+                        </div>
+                      </div>
+                    </div>
+                    <div class="comment__reply" id="hide">表示
+                      <div class="comment__reply__content" data-index=${comment.index}></div>
+                    </div>
+                  </div>`
     return html;
   }
+
+  var searchingReply = function() {
+    var comment = $('.comment__text');
+    var length = comment.length;
+    for (var i=1; i<=length; i++) {
+      comment.each(function(I, e) {
+        var text = $(e).text();
+        var pattern = new RegExp(`>>${i}`);
+        var result = pattern.test(text);
+        if (result === true) {
+          var reply = $(`.comment__reply__content[data-index=${i}]`);
+          var comment = $(e).parent('.comment')
+          const appendComment = comment.clone();
+          appendComment.addClass('reply')
+          reply.append(appendComment);
+        }
+      });
+    }
+  };
+
+  $('.comment__index').on('click', function(){
+    var textarea = $('.text_area')
+    var index = $(this).data('index');
+    var inputVal = '>>' + `${index}` +'\n';
+    textarea.val(textarea.val() + inputVal);
+  });
   
   $('#new_article_comment').on('submit', function(e){
     e.preventDefault();
@@ -46,6 +109,7 @@ $(function(){
       $('.new_comment').append(insertHTML);
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
+      searchingReply();
     })
     .fail(function(){
       alert('error');
@@ -74,32 +138,13 @@ $(function(){
     });
   };
 
+  searchingReply();
+  
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
-    //setInterval(reloadComments, 7000);
+    //setInterval(reloadComments, 300000);
+    //searchingReply();
   }
 
-  $('.comment__index').on('click', function(){
-    var textarea = $('.text_area')
-    var index = $(this).data('index');
-    var inputVal = '>>' + `${index}` +'\n';
-    textarea.val(textarea.val() + inputVal);
-  });
-
-  var comment = $('.comment__text');
-  var length = comment.length;
-  for (var i=1; i<=length; i++) {
-    comment.each(function(I, e) {
-      var text = $(e).text();
-      var pattern = new RegExp(`>>${i}`);
-      var result = pattern.test(text);
-      if (result === true) {
-        var reply = $(`.comment__reply__content[data-index=${i}]`);
-        var comment = $(e).parent('.comment')
-        const appendComment = comment.clone();
-        reply.append(appendComment);
-      }
-    });
-  }
 
   $(document).on('click','.comment__reply#hide', function() {
     var reply = $(this).children('.comment__reply__content');
@@ -114,3 +159,6 @@ $(function(){
     $(this).attr('id', 'hide');
   });
 });
+
+//コメント表示として隠れて表示されているため、first()が思った場所に機能しない
+//隠れコメントには別のidを付与するなどで対処したい
