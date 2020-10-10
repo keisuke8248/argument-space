@@ -2,22 +2,22 @@
   .showMain
     .content
       .article
-        .article__title{data: {article: {id: @article.id}}}
-          = link_to @article.title.to_s, @article.url
+        .article__header
+          .article__header__image
+            = image_tag @article.urlToImage.to_s, id: "article"
+          .article__header__title{data: {article: {id: @article.id}}}
+            = link_to @article.title.to_s, @article.url
         .article__detail
           .article__detail__publishedAt
             = @article.publishedAt
           .article__detail__author
             = @article.author
-        .article__content
-          .article__content__image
-            = image_tag @article.urlToImage.to_s
-          .article_content__description
-            = @article.description
+        .article__description
+          = @article.description
       .comments
         - if @comments.present?
           - @comments.zip(@comments.ids) do |c, id|
-          - my_evaluation = my_evaluation(@article.id, id)
+          - myEvaluation = myEvaluation(@article.id, id)
             .comment{data: {comment: {id: id}}}
               .comment__detail
                 .comment__index{data: {index: c.index}}
@@ -29,38 +29,45 @@
               .comment__text{data: {index: c.index}}
                 = c.text
               .comment__evaluation
-                .comment__evaluation___form
-                  - if my_evaluation != "good"
+                .comment__evaluation__form
+                  - if myEvaluation != "good"
                     = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
-                      = f.submit "good", class: "good_btn", disabled: (my_evaluation == "bad")
+                      = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") do
+                        %i.fas.fa-thumbs-up
+                          .fas.fa-thumbs-up__letter good
                   - else
                     = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
-                      = f.submit "good", class: "canceling_good_btn"
+                      = button_tag type: 'submit', class: "canceling_good_btn" do
+                        %i.fas.fa-thumbs-up
+                          .fas.fa-thumbs-up__letter good
                   .count_good
                     = counting_evaluation(@article.id, id, "good")
-                .comment__evaluation___form
-                  - if my_evaluation != "bad"
+                .comment__evaluation__form
+                  - if myEvaluation != "bad"
                     = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
-                      = f.submit "bad", class: "bad_btn", disabled: (my_evaluation == "good")
+                      = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") do
+                        %i.fas.fa-thumbs-down
+                          .fas.fa-thumbs-down__letter bad
                   - else
                     = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
-                      = f.submit "bad", class: "canceling_bad_btn"
+                      = button_tag type: 'submit', class: "canceling_bad_btn" do
+                        %i.fas.fa-thumbs-down
+                          .fas.fa-thumbs-down__letter bad
                   .count_bad
                     = counting_evaluation(@article.id, id, "bad")
-              .comment__reply#hide
+              .comment__reply#hide 
                 = "表示"
-                .comment__reply__content{style: 'display: none;', data: {index: c.index}}
-              %br
+                .comment__reply__content{data: {index: c.index}}
         .new_comment
 
       = form_with model:[@article, @article_comments], local: true, class: "comment__form", id: "new_article_comment" do |f|
-        = f.text_area :text, placeholder: "コメントを入力してください", class: "text_area"
+        = f.text_area :text, placeholder: "コメントを入力してください", class: "text_area", cols: "60", rows: "8", maxlength: "500"
         = f.submit "送信", class: "submit_comment"

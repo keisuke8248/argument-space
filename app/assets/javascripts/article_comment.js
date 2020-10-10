@@ -84,13 +84,9 @@ $(function(){
     var inputVal = '>>' + `${index}` +'\n';
     textarea.val(textarea.val() + inputVal);
   });
-});
 
-$(function(){
   var comment = $('.comment__text');
   var length = comment.length;
-  //var sum = 0;
-  //var array = [];
   for (var i=1; i<=length; i++) {
     comment.each(function(I, e) {
       var text = $(e).text();
@@ -101,7 +97,6 @@ $(function(){
         var comment = $(e).parent('.comment')
         const appendComment = comment.clone();
         reply.append(appendComment);
-        //sum++;
       }
     });
   }
@@ -118,7 +113,4 @@ $(function(){
     $(this).removeAttr('id');
     $(this).attr('id', 'hide');
   });
-
-  console.log(array);
-
 });

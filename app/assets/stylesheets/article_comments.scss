@@ -1,3 +1,88 @@
-// Place all the styles related to the articleComments controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+img#article {
+  max-width: 100px;
+  max-height: 100px;
+}
+
+.wrapper {
+  margin-bottom: 50px;
+}
+
+.showMain {
+  margin: 10px 10px;
+}
+
+.article {
+  &__header {
+    display: flex;
+    &__title {
+      font-size: 20px;
+      text-align: center;
+      vertical-align: middle;
+      margin-left: 50px;
+    }
+  }
+  
+  &__detail {
+    display: flex;
+  }
+  &__description {
+    margin: 20px 0 20px 0;
+  }
+}
+
+.comments {
+  border-top: solid black 1px;
+}
+
+.comment {
+  margin-top: 15px;
+  &__detail {
+    display: flex;
+    &__nickname {
+      margin-left: 2px;
+    }
+    &__date {
+      margin-left: 5px;
+    }
+  }
+  &__evaluation {
+    display: flex;
+    &__form {
+      display: flex;
+    }
+  }
+  &__form {
+    border-top: solid black 1px;
+  }
+  &__reply {
+    &__content {
+      display: none;
+      background-color: #c0c0c0;
+    }
+  }
+  .text_area {
+    height: 80px;
+    width: 200px;
+  }
+}
+
+.comments:last-child {
+  margin-bottom: 15px;
+}
+
+.canceling_good_btn {
+  color: red;
+}
+
+.canceling_bad_btn {
+  color: blue;
+}
+.good-btn .bad-btn .canceling_good_btn .canceling_bad_btn {
+  border: none;
+}
+
+.fas {
+  font-size: 6px;
+}
+
+

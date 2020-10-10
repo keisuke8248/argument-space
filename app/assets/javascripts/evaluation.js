@@ -2,47 +2,55 @@ $(function(){
 
   function buildHTML(data, Class1, Class2, value){
     let comment = $(`.comment[data-comment-id=${data.comment_id}]`);
-    let form = comment.find(`.evaluation_form_${Class1}`);
-    let count_btn = comment.find(`.count_${value}`);
-    var btn = comment.find(`.${Class1}_btn`);
+    let form = comment.find(`.evaluation_form_${Class1}`).first();
+    let count_btn = comment.find(`.count_${value}`).first();
     
+    if (value === "good") {
+      var UpDown = "up";
+    } else {
+      var UpDown = "down";
+    }
+
     count_btn.html(data.sum);
-    let insertHTML = buildHTML2(data.article_id, data.comment_id, `${Class2}_btn`, value);
+    let insertHTML = buildHTML2(data.article_id,
+                                data.comment_id,
+                                `${Class2}_btn`,
+                                value,
+                                UpDown);
     form.html(insertHTML);
-    var btn = comment.find(`.${Class2}_btn`);
     
     form.attr('action', `/evaluations/${Class2}`);
     form.removeClass().addClass(`evaluation_form_${Class2}`);
 
-    if (Class1 == "good") {
-      btn.css('background-color', 'red');
-      var btn = comment.find('.bad_btn');
+    if (Class1 === "good") {
+      var btn = comment.find('.bad_btn').firist();
       btn.prop('disabled', true);
     }
-    if (Class1  == "bad") {
-      btn.css('background-color', 'red');
-      var btn = comment.find('.good_btn');
+    if (Class1  === "bad") {
+      var btn = comment.find('.good_btn').first();
       btn.prop('disabled', true);
     }
-    if (Class1 == "canceling_good") {
-      btn.css('background-color', 'white');
-      var btn = comment.find('.bad_btn');
+    if (Class1 === "canceling_good") {
+      var btn = comment.find('.bad_btn').firts();
       btn.prop('disabled', false);
     }
-    if (Class1 == "canceling_bad") {
-      btn.css('background-color', 'white');
-      var btn = comment.find('.good_btn');
+    if (Class1 === "canceling_bad") {
+      var btn = comment.find('.good_btn').first();
       btn.prop('disabled', false);
     }
   }
 
-  function buildHTML2(article_id, comment_id, Class, value) {
+  function buildHTML2(article_id, comment_id, Class, value, UpDown) {
     let html = `
                <input name="utf8" type="hidden" value="✓"></input>
                <input value="${article_id}" type="hidden" name="article_id" id="article_id"></input>
                <input value="${comment_id}" type="hidden" name="comment_id" id="comment_id"></input>
-               <input type="submit" name="commit" value=${value} class=${Class} data-disable-with=${value}></input>
-                `
+               <button name="button" type="submit" class=${Class}>
+                 <i class="fas fa-thumbs-${UpDown}">
+                   <div class="fas fa-thumbs-${UpDown}__letter">${value}</div>
+                </i>
+              </button>
+              `
     return html;
   }
 
