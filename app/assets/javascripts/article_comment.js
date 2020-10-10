@@ -57,23 +57,29 @@ $(function(){
   }
 
   var searchingReply = function() {
-    var comment = $('.comment__text');
+    var comment = $('.comment__text').not('.reply');
     var length = comment.length;
-    for (var i=1; i<=length; i++) {
+    for (var i=1; i<=length; i++) {  //e(コメント)のテキストからアンカーを検索
       comment.each(function(I, e) {
+        var reply = $(`.comment__reply__content[data-index=${i}]`);
+        if (I === 0) {
+          reply.html('');
+        }
         var text = $(e).text();
         var pattern = new RegExp(`>>${i}`);
         var result = pattern.test(text);
         if (result === true) {
-          var reply = $(`.comment__reply__content[data-index=${i}]`);
-          var comment = $(e).parent('.comment')
-          const appendComment = comment.clone();
-          appendComment.addClass('reply')
+          let commentClass = $(e).parent('.comment')
+          let appendComment = commentClass.clone();
+          appendComment.addClass('reply');
+          $(e).addClass('reply');
           reply.append(appendComment);
         }
       });
     }
   };
+
+  searchingReply();
 
   $('.comment__index').on('click', function(){
     var textarea = $('.text_area')
@@ -137,8 +143,6 @@ $(function(){
       alert('error');
     });
   };
-
-  searchingReply();
   
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
     //setInterval(reloadComments, 300000);
