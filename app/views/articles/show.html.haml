@@ -1,3 +1,34 @@
-- @news.each do |n|
-  = link_to n.title, n.url.to_s
-  = image_tag n.urlToImage.to_s
+= stylesheet_link_tag "articles", media: :all
+.wrapper
+  .showMain
+    .content
+      .content__top
+        .content__top__category
+          = link_to "ヘッドライン", articles_path
+        - categoryArrayjp.zip(0..5) do |category, i|
+          .content__top__category
+            = link_to category, article_path(i)
+      .content__main
+        .content__main__left
+          - @news.each do |n|
+            .article
+              .article__left
+                = image_tag n.urlToImage.to_s
+              .article__right
+                .article__right__title
+                  = link_to n.title.gsub(/-.+$/, ""), n.url.to_s, target: :_blank
+                .article__right__author
+                  = n.title.match(/[^-]+$/)
+                .article__right__commentCounts
+                  = link_to "コメント", article_article_comments_path(articleID(n))
+                  = article_comment(articleID(n))
+        .content__main__right
+          .content__main__right__header
+            新着コメント
+          .articleComments
+            - @articleComments.each do |c|
+              .articleComment
+                .articleComment__text
+                  = c.text.truncate(40)
+                .articleComment__articleTitle
+                  = link_to articleTitle(c.article_id).truncate(20), articlePath(c.article_id)

@@ -1,3 +1,5 @@
+$border_color: solid black 1px;
+
 img#article {
   max-width: 100px;
   max-height: 100px;
@@ -24,6 +26,9 @@ img#article {
   
   &__detail {
     display: flex;
+    &__author {
+      margin-left: 24px;
+    }
   }
   &__description {
     margin: 20px 0 20px 0;
@@ -31,7 +36,8 @@ img#article {
 }
 
 .comments {
-  border-top: solid black 1px;
+  border-top: $border_color;
+  padding-bottom: 20px;
 }
 
 .comment {
@@ -52,7 +58,8 @@ img#article {
     }
   }
   &__form {
-    border-top: solid black 1px;
+    padding-top: 20px;
+    border-top: $border_color;
   }
   &__reply {
     &__content {
@@ -63,6 +70,12 @@ img#article {
   .text_area {
     height: 80px;
     width: 200px;
+  }
+  .submit_comment {
+    background-color: blue;
+    position: absolute;
+    left: 0px;
+    top: 0px;
   }
 }
 

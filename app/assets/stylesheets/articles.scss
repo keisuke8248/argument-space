@@ -1,0 +1,89 @@
+$border: 1px solid #e1e1e1;;
+
+img {
+  max-width: 80px;
+  max-height: 80px;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.content {
+  width: 1000px;
+  margin: auto;
+  &__top {
+    display: flex;
+    &__category {
+      font-size: 20px;
+      height: 42px;
+      width: calc(1000px / 6);
+      text-align: center;
+      line-height: 42px;
+      border: $border;
+    }
+  }
+  &__main{
+    display: flex;
+    margin-top: 30px;
+    border-right: $border;
+    border-left: $border;
+    border-bottom: $border;
+    &:not(:first-child) {
+      border: $border;
+    }
+
+    &__left{
+      width: 600px;
+      border-right: $border;
+    }
+    &__right {
+      width: 400px;
+      &__header {
+        text-align: center;
+        line-height: 38px;
+        font-size: 20px;
+        border-bottom: $border;
+      }
+    }
+  }
+}
+
+.articleComments {
+  padding: 10px 20px 20px 20px;
+}
+.articleComment {
+  padding: 8px 0;
+  &:not(:first-child) {
+    border-top: $border;
+  }
+  &__text {
+    font-size: 12px;
+  }
+  &__articleTitle {
+    font-size: 5px;
+    text-align: right;
+  }
+}
+
+.article {
+  box-sizing: border-box;
+  padding: 10px 0 10px 0;
+  display: flex;
+  &:not(:first-child){
+    border-top: $border;
+  }
+  &__left {
+    padding: auto;
+    height: 80px;
+    width: 80px;
+  }
+  &__right {
+    width: 405px;
+    margin-left: 15px;
+    &__commentCounts {
+      text-align: right;
+      font-size: 14px;
+    }
+  }
+}
