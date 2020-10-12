@@ -29,3 +29,5 @@
 public/uploads/*
 
 .env
+
+structure.sql
