@@ -57,31 +57,49 @@ $(function(){
   }
 
   var searchingReply = function() {
+
     var comment = $('.comment__text').not('.reply');
     var length = comment.length;
+    var replyCount;
+
+
     for (var i=1; i<=length; i++) {  //e(コメント)のテキストからアンカーを検索
       comment.each(function(I, e) {
         var reply = $(`.comment__reply__content[data-index=${i}]`);
+
         if (I === 0) {
           reply.html('');
+          replyCount = 0;
         }
+        
         var text = $(e).text();
-        var pattern = new RegExp(`>>${i}`);
+        let anchor = `>>${i}`
+        var pattern = new RegExp(anchor + "(?!\\d+)");
         var result = pattern.test(text);
+
         if (result === true) {
+          replyCount++;
           let commentClass = $(e).parent('.comment')
           let appendComment = commentClass.clone();
           appendComment.addClass('reply');
           $(e).addClass('reply');
           reply.append(appendComment);
         }
+
+        if (length === I+1) {
+          let Class = reply.prev('.comment__reply__count');
+          Class.html(replyCount);
+        }
       });
+
+
+
     }
   };
 
   searchingReply();
 
-  $('.comment__index').on('click', function(){
+  $(document).on('click', '.comment__index', function(){
     var textarea = $('.text_area')
     var index = $(this).data('index');
     var inputVal = '>>' + `${index}` +'\n';
@@ -125,7 +143,7 @@ $(function(){
 
   var reloadComments = function() {
     var last_comment_id = $('.comment:last').data("comment-id");
-    var article_id = $('.article__title').data("article-id");
+    var article_id = $('.article__header__title').data("article-id");
     $.ajax({
       url: "/articles/" + article_id + "/article_comments/api",
       type: 'get',
@@ -138,6 +156,9 @@ $(function(){
         insertHTML += buildHTML(comment);
       });
       $('.new_comment').append(insertHTML);
+      if ( insertHTML !== '') {
+        searchingReply();
+      }
     })
     .fail(function() {
       alert('error');
@@ -145,24 +166,20 @@ $(function(){
   };
   
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
-    //setInterval(reloadComments, 300000);
-    //searchingReply();
+    //setInterval(reloadComments, 7000);
   }
 
 
   $(document).on('click','.comment__reply#hide', function() {
-    var reply = $(this).children('.comment__reply__content');
+    var reply = $(this).find('.comment__reply__content');
     reply.show();
     $(this).removeAttr('id');
     $(this).attr('id', 'show');
   })
   $(document).on('click','.comment__reply#show', function(){
-    var reply = $(this).children('.comment__reply__content');
+    var reply = $(this).find('.comment__reply__content');
     reply.hide();
     $(this).removeAttr('id');
     $(this).attr('id', 'hide');
   });
 });
-
-//コメント表示として隠れて表示されているため、first()が思った場所に機能しない
-//隠れコメントには別のidを付与するなどで対処したい
