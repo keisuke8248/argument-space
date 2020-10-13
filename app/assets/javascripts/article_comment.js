@@ -46,7 +46,7 @@ $(function(){
                     <div class="comment__reply" id="hide">
                       <div class="comment__reply__btn">
                         <div class"comment__reply__text">返信</div>
-                        <div class"comment__reply__count">0</div>
+                        <div class"comment__reply__count" data-index=${comment.index}>0</div>
                       </div>
                       <div class="comment__reply__content" data-index=${comment.index}></div>
                     </div>
@@ -60,7 +60,8 @@ $(function(){
     var length = comment.length;
     var replyCount;
 
-
+    //i: >>iのアンカーが存在するか確認
+    //I I+1個めのコメントのテキストを調べているの意味
     for (var i=1; i<=length; i++) {  //e(コメント)のテキストからアンカーを検索
       comment.each(function(I, e) {
         var reply = $(`.comment__reply__content[data-index=${i}]`);
@@ -69,7 +70,7 @@ $(function(){
           reply.html('');
           replyCount = 0;
         }
-        
+        //debugger;
         var text = $(e).text();
         let anchor = `>>${i}`
         var pattern = new RegExp(anchor + "(?!\\d+)");
@@ -78,16 +79,19 @@ $(function(){
         if (result === true) {
           //debugger;
           replyCount++;
-          let commentClass = $(e).parent('.comment')
-          let appendComment = commentClass.clone();
-          appendComment.addClass('reply');
-          $(e).addClass('reply');
-          reply.append(appendComment);
+          let commentClass = $(e).parent('.comment')//テキストの親のコメントクラス
+          let commentToBeAppended = commentClass.clone();//クローン
+          commentToBeAppended.find('.comment').addClass('reply');//replyクラスを付与して返信であることを明示
+          //commentToBeAppended.find('.comment__reply__content').addClass('reply');
+          //$(e).addClass('reply');
+          reply.append(commentToBeAppended);
+          
+          //返信数が更新されたら何かアニメーションをつけたい
         }
 
         if (length === I+1) {
           //debugger;
-          let Class = reply.parent().find('.comment__reply__count').first();
+          let Class = $(`.comment__reply__count[data-index=${i}]`);
           Class.html(replyCount);
         }
       });
@@ -97,7 +101,7 @@ $(function(){
     }
   };
 
-  searchingReply();
+  //searchingReply();
 
   $(document).on('click', '.comment__index', function(){
     var textarea = $('.text_area')
@@ -157,7 +161,7 @@ $(function(){
       });
       $('.new_comment').append(insertHTML);
       if ( insertHTML !== '') {
-        searchingReply();
+        //searchingReply();
       }
     })
     .fail(function() {
