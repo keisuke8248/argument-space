@@ -25,13 +25,10 @@ $(function(){
                           <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                           <button name="button" type="submit" class="good_btn">
                             <i class="fas fa-thumbs-up">
-                              <div class="fas fa-thumbs-up__letter">good</div>
+                              <span class="count_good">0</span>
                             </i>
                           </button>
                         </form>
-                        <div class="count_good">
-                        0
-                        </div>
                       </div>
                       <div class="comment__evaluation__form">
                         <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
@@ -40,16 +37,17 @@ $(function(){
                           <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                           <button name="button" type="submit" class="bad_btn">
                             <i class="fas fa-thumbs-down">
-                              <div class="fas fa-thumbs-down__letter">bad</div>
+                              <span class="count_bad">0</span>
                             </i>
                           </button>
                         </form>
-                        <div class="count_bad">
-                        0
-                        </div>
                       </div>
                     </div>
-                    <div class="comment__reply" id="hide">表示
+                    <div class="comment__reply" id="hide">
+                      <div class="comment__reply__btn">
+                        <div class"comment__reply__text">返信</div>
+                        <div class"comment__reply__count">0</div>
+                      </div>
                       <div class="comment__reply__content" data-index=${comment.index}></div>
                     </div>
                   </div>`
@@ -78,6 +76,7 @@ $(function(){
         var result = pattern.test(text);
 
         if (result === true) {
+          //debugger;
           replyCount++;
           let commentClass = $(e).parent('.comment')
           let appendComment = commentClass.clone();
@@ -87,7 +86,8 @@ $(function(){
         }
 
         if (length === I+1) {
-          let Class = reply.prev('.comment__reply__count');
+          //debugger;
+          let Class = reply.parent().find('.comment__reply__count').first();
           Class.html(replyCount);
         }
       });
@@ -172,7 +172,7 @@ $(function(){
 
   $(document).on('click','.comment__reply#hide', function() {
     var reply = $(this).find('.comment__reply__content');
-    reply.show();
+    reply.fadeIn(500);
     $(this).removeAttr('id');
     $(this).attr('id', 'show');
   })

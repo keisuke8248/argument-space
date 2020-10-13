@@ -3,7 +3,6 @@ $(function(){
   function buildHTML(data, Class1, Class2, value){
     let comment = $(`.comment[data-comment-id=${data.comment_id}]`).not('.reply');
     let form = comment.find(`.evaluation_form_${Class1}`).first();
-    let count_btn = comment.find(`.count_${value}`).first();
     
     if (value === "good") {
       var UpDown = "up";
@@ -11,13 +10,19 @@ $(function(){
       var UpDown = "down";
     }
 
-    count_btn.html(data.sum);
+
     let insertHTML = buildHTML2(data.article_id,
                                 data.comment_id,
                                 `${Class2}_btn`,
                                 value,
-                                UpDown);
+                                UpDown,
+                                data.sum);
+
+    //debugger;
     form.html(insertHTML);
+
+    //let count_btn = comment.find(`.count_${value}`).first();
+    //count_btn.html(data.sum);
     
     form.attr('action', `/evaluations/${Class2}`);
     form.removeClass().addClass(`evaluation_form_${Class2}`);
@@ -40,15 +45,15 @@ $(function(){
     }
   }
 
-  function buildHTML2(article_id, comment_id, Class, value, UpDown) {
+  function buildHTML2(article_id, comment_id, Class, value, UpDown, sum) {
     let html = `
                <input name="utf8" type="hidden" value="✓"></input>
                <input value="${article_id}" type="hidden" name="article_id" id="article_id"></input>
                <input value="${comment_id}" type="hidden" name="comment_id" id="comment_id"></input>
                <button name="button" type="submit" class=${Class}>
                  <i class="fas fa-thumbs-${UpDown}">
-                   <div class="fas fa-thumbs-${UpDown}__letter">${value}</div>
-                </i>
+                   <span class="count_${value}">${sum}</span>
+                 </i>
               </button>
               `
     return html;
