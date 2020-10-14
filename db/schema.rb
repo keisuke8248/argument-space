@@ -10,7 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_10_01_103944) do
+ActiveRecord::Schema.define(version: 2020_10_13_183824) do
+
+  create_table "article_comment_replies", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
+    t.bigint "parent_article_comment_id"
+    t.bigint "children_article_comment_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["children_article_comment_id"], name: "index_article_comment_replies_on_children_article_comment_id"
+    t.index ["parent_article_comment_id"], name: "index_article_comment_replies_on_parent_article_comment_id"
+  end
 
   create_table "article_comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.string "text", null: false
@@ -97,6 +106,8 @@ ActiveRecord::Schema.define(version: 2020_10_01_103944) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "article_comment_replies", "article_comments", column: "children_article_comment_id"
+  add_foreign_key "article_comment_replies", "article_comments", column: "parent_article_comment_id"
   add_foreign_key "article_comments", "articles"
   add_foreign_key "article_comments", "users"
   add_foreign_key "comments", "groups"
