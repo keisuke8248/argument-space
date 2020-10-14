@@ -17,9 +17,9 @@
           = @article.description
       .comments
         - if @comments.present?
-          - @comments.zip(@comments.ids) do |c, id|
-          - myEvaluation = myEvaluation(@article.id, id)
-            .comment{data: {comment: {id: id}}}
+          - @comments.each do |c|
+          - myEvaluation = myEvaluation(@article.id, c.id)
+            .comment{data: {comment: {id: c.id}}}
               .comment__detail
                 .comment__index{data: {index: c.index}}
                   = "#{c.index}" + ":"
@@ -34,28 +34,28 @@
                   - if myEvaluation != "good"
                     = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
-                      = f.hidden_field :comment_id, value: id
+                      = f.hidden_field :comment_id, value: c.id
                       = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") do
                         %i.fas.fa-thumbs-up
                           %span.count_good
-                            = counting_evaluation(@article.id, id, "good")
+                            = counting_evaluation(@article.id, c.id, "good")
                   - else
                     = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
-                      = f.hidden_field :comment_id, value: id
+                      = f.hidden_field :comment_id, value: c.id
                       = button_tag type: 'submit', class: "canceling_good_btn" do
                         %i.fas.fa-thumbs-up
                           %span.count_good
-                            = counting_evaluation(@article.id, id, "good")
+                            = counting_evaluation(@article.id, c.id, "good")
                 .comment__evaluation__form
                   - if myEvaluation != "bad"
                     = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
-                      = f.hidden_field :comment_id, value: id
+                      = f.hidden_field :comment_id, value: c.id
                       = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") do
                         %i.fas.fa-thumbs-down
                           %span.count_bad
-                            = counting_evaluation(@article.id, id, "bad")
+                            = counting_evaluation(@article.id, c.id, "bad")
                   - else
                     = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
@@ -63,16 +63,16 @@
                       = button_tag type: 'submit', class: "canceling_bad_btn" do
                         %i.fas.fa-thumbs-down
                           %span.count_bad
-                            = counting_evaluation(@article.id, id, "bad")
+                            = counting_evaluation(@article.id, c.id, "bad")
               .comment__reply#hide
                 .comment__reply__btn
                   .comment__reply__text
                     返信
                   .comment__reply__count{data: {index: c.index}}
-                    = replyCount(id)
+                    = replyCount(c.id)
                 .comment__reply__content{data: {index: c.index}}
-                  - if getReplies(id).present?
-                    - getReplies(id).each do |c|
+                  - if getReplies(c.id).present?
+                    - getReplies(c.id).each do |c|
                     - myEvaluation = myEvaluation(@article.id, c.id)
                       .comment{data: {comment: {id: id}}}
                         .comment__detail

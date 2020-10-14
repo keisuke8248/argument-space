@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   resources :articles, only: [:index, :show] do
     resources :article_comments, only: [:index, :create] do
       collection do
+        get :index10
         get :api, defaults: {format: 'json'}
       end
     end

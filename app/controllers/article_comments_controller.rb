@@ -7,6 +7,13 @@ class ArticleCommentsController < ApplicationController
     @article_comments = ArticleComment.new
   end
 
+  def index10
+    comments = ArticleComment.includes(:article).where(article_id: @article_id)
+    @comments = comments.order("created_at DESC").limit(10).reverse
+    @article = Article.find(@article_id)
+    @article_comments = ArticleComment.new
+  end
+
   def create
     article_comment = ArticleComment.create(comments_params)
     id = article_comment.id
