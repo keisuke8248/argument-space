@@ -9,7 +9,18 @@ class ArticleCommentsController < ApplicationController
 
   def create
     article_comment = ArticleComment.create(comments_params)
+    id = article_comment.id
     length = ArticleComment.where(article_id: @article_id).length
+    text = article_comment.text
+    a = []
+
+    (1..length).each do |i|
+      if />>#{i}[^\d]/.match(text)
+        ArticleCommentReply.create!(parent_article_comment_id: id,
+          children_article_comment_id: i)
+      end
+    end
+
     article_comment.update(index: length.to_i)
     @new_comment = ArticleComment.where('article_id = ? and id > ? and id <= ?', 
                                         @article_id, @last_comment_id, article_comment.id)

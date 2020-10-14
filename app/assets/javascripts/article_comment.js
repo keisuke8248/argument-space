@@ -95,9 +95,6 @@ $(function(){
           Class.html(replyCount);
         }
       });
-
-
-
     }
   };
 
@@ -137,7 +134,6 @@ $(function(){
       $('.new_comment').append(insertHTML);
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
-      searchingReply();
     })
     .fail(function(){
       alert('error');

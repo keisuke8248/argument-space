@@ -11,4 +11,18 @@ module ArticleCommentsHelper
     end
   end
 
+  def replyCount(id)
+    reply = ArticleCommentReply.where(children_article_comment_id: id)
+    return reply.length
+  end
+
+  def getReplies(id)
+    a = []
+    reply = ArticleCommentReply.where(children_article_comment_id: id)
+    reply.each do |r|
+      id = r.parent_article_comment_id
+      a << ArticleComment.find(id)
+    end
+    return a
+  end
 end
