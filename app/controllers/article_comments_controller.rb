@@ -18,12 +18,14 @@ class ArticleCommentsController < ApplicationController
     id = article_comment.id
     length = ArticleComment.where(article_id: @article_id).length
     text = article_comment.text
+    @anchors = []
 
     (1..length).each do |i|
       if />>#{i}[^\d]/.match(text)
         comment = ArticleComment.find_by(article_id: @article_id, index: i)
-        ArticleCommentReply.create!(parent_article_comment_id: id,
-          children_article_comment_id: comment.id)
+        ArticleCommentReply.create(parent_article_comment_id: id,
+                                    children_article_comment_id: comment.id)
+      @anchors << i
       end
     end
 
