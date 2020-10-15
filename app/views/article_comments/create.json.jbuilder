@@ -5,13 +5,20 @@ if @new_comment.length == 1
   json.text @new_comment.first.text
   json.nickname @new_comment.first.user.nickname
   json.date time_setting(@new_comment.first.created_at)
+  json.anchor @anchors
 else
-  json.array! @new_comment do |comment|
-    json.id comment.id
-    json.index comment.index
-    json.article_id comment.article_id
-    json.text comment.text
-    json.nickname comment.user.nickname
-    json.date time_setting(comment.created_at)
+  json.set! :comment1 do
+    json.array! @new_comment do |comment|
+      json.id comment.id
+      json.index comment.index
+      json.article_id comment.article_id
+      json.text comment.text
+      json.nickname comment.user.nickname
+      json.date time_setting(comment.created_at)
+    end
+  end
+  json.set! :comment2 do
+    json.anchor @anchor
   end
 end
+
