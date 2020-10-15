@@ -3,54 +3,55 @@ $(function(){
   function buildHTML(comment){
 
       const html = `<div class="comment" data-comment-id=${comment.id}>
-                    <div class="comment__detail">
-                      <div class="comment__index" data-index="${comment.index}">
-                        ${comment.index}:
+                      <div class="comment__detail">
+                        <div class="comment__index" data-index="${comment.index}">
+                          ${comment.index}:
+                        </div>
+                        <div class="comment__detail__nickname">
+                          ${comment.nickname}
+                        </div>
+                        <div class="comment__detail__date">
+                          ${comment.date}
+                        </div>
                       </div>
-                      <div class="comment__detail__nickname">
-                        ${comment.nickname}
+                      <div class="comment__text" data-index=${comment.index}>
+                        ${comment.text}
                       </div>
-                      <div class="comment__detail__date">
-                        ${comment.date}
+                      <div class="comment__evaluation">
+                        <div class="comment__evaluation__form">
+                          <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
+                            <input name="utf8" type="hidden" value="✓"></input>
+                            <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
+                            <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
+                            <button name="button" type="submit" class="good_btn">
+                              <i class="fas fa-thumbs-up">
+                                <span class="count_good">0</span>
+                              </i>
+                            </button>
+                          </form>
+                        </div>
+                        <div class="comment__evaluation__form">
+                          <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
+                            <input name="utf8" type="hidden" value="✓"></input>
+                            <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
+                            <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
+                            <button name="button" type="submit" class="bad_btn">
+                              <i class="fas fa-thumbs-down">
+                                <span class="count_bad">0</span>
+                              </i>
+                            </button>
+                          </form>
+                        </div>
                       </div>
-                    </div>
-                    <div class="comment__text" data-index=${comment.index}>
-                      ${comment.text}
-                    </div>
-                    <div class="comment__evaluation">
-                      <div class="comment__evaluation__form">
-                        <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
-                          <input name="utf8" type="hidden" value="✓"></input>
-                          <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
-                          <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                          <button name="button" type="submit" class="good_btn">
-                            <i class="fas fa-thumbs-up">
-                              <span class="count_good">0</span>
-                            </i>
-                          </button>
-                        </form>
-                      </div>
-                      <div class="comment__evaluation__form">
-                        <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
-                          <input name="utf8" type="hidden" value="✓"></input>
-                          <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
-                          <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                          <button name="button" type="submit" class="bad_btn">
-                            <i class="fas fa-thumbs-down">
-                              <span class="count_bad">0</span>
-                            </i>
-                          </button>
-                        </form>
-                      </div>
-                    </div>
-                    <div class="comment__reply" id="hide">
-                      <div class="comment__reply__btn">
-                        <div class"comment__reply__text">返信</div>
-                        <div class"comment__reply__count" data-index=${comment.index}>0</div>
-                      </div>
+                      <div class="comment__reply" id="hide">
+                        <div class="comment__reply__btn">
+                          <div class"comment__reply__text">返信</div>
+                          <div class"comment__reply__count" data-index=${comment.index}>0</div>
+                        </div>
                       <div class="comment__reply__content" data-index=${comment.index}></div>
                     </div>
-                  </div>`
+                  </div>
+                  <div class="new_comment"></div>`
     return html;
   }
 
@@ -98,11 +99,10 @@ $(function(){
     }
   };
 
-  //searchingReply();
 
   $(document).on('click', '.comment__index', function(){
     var textarea = $('.text_area')
-    var index = $(this).data('index');
+      var index = $(this).data('index');
     var inputVal = '>>' + `${index}` +'\n';
     textarea.val(textarea.val() + inputVal);
   });
@@ -122,18 +122,28 @@ $(function(){
       contentType: false
     })
     .done(function(data){
-      if ($.isArray(data)) {
+      if ($.isArray(data.comment1)) {
         var insertHTML = '';
-        $.each(data, function(i, comment) {
+        $.each(data.comment1, function(i, comment) {
           insertHTML += buildHTML(comment);
         });
       } else {
         insertHTML = buildHTML(data);
+        let anchor = data.anchor
+        $(document).ready(function() {
+          $.each(anchor, function(i, e) {
+            let Class = $(`.comment__reply__count[data-index=${e}]`);
+            var val = Class.text();
+            val++;
+            Class.text(val);
+        })
+      });
       }
-      var comment = $('.new_comment');
+      
+      var comment = $('.new_comment:last');
       comment.append(insertHTML);
       comment.hide();
-      comment.fadeIn(80)
+      comment.fadeIn(200)
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
     })
@@ -159,7 +169,6 @@ $(function(){
       });
       $('.new_comment').append(insertHTML);
       if ( insertHTML !== '') {
-        //searchingReply();
       }
     })
     .fail(function() {
