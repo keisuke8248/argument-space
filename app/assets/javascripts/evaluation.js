@@ -18,11 +18,7 @@ $(function(){
                                 UpDown,
                                 data.sum);
 
-    //debugger;
     form.html(insertHTML);
-
-    //let count_btn = comment.find(`.count_${value}`).first();
-    //count_btn.html(data.sum);
     
     form.attr('action', `/evaluations/${Class2}`);
     form.removeClass().addClass(`evaluation_form_${Class2}`);
