@@ -95,15 +95,23 @@ img#article {
   margin-bottom: 15px;
 }
 
+.good_btn, .bad_btn {
+  background-color: rgb(209, 209, 209); 
+}
+
 .canceling_good_btn {
   color: red;
+  background-color: pink;
 }
 
 .canceling_bad_btn {
   color: blue;
+  background-color: rgb(203, 177, 255);
 }
-.good-btn .bad-btn .canceling_good_btn .canceling_bad_btn {
-  border: none;
+
+.good_btn, .bad_btn, .canceling_good_btn, .canceling_bad_btn {
+  outline: none;
+  border: 1px solid #dedede;
 }
 
 .fas {
