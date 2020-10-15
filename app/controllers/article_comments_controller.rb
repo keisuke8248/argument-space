@@ -1,16 +1,15 @@
 class ArticleCommentsController < ApplicationController
   before_action :set_params
+  before_action :find_articles
 
   def index
     @comments = ArticleComment.includes(:article).where(article_id: @article_id)
-    @article = Article.find(@article_id)
     @article_comments = ArticleComment.new
   end
 
   def index10
     comments = ArticleComment.includes(:article).where(article_id: @article_id)
     @comments = comments.order("created_at DESC").limit(10).reverse
-    @article = Article.find(@article_id)
     @article_comments = ArticleComment.new
   end
 
@@ -19,12 +18,12 @@ class ArticleCommentsController < ApplicationController
     id = article_comment.id
     length = ArticleComment.where(article_id: @article_id).length
     text = article_comment.text
-    a = []
 
     (1..length).each do |i|
       if />>#{i}[^\d]/.match(text)
+        comment = ArticleComment.find_by(article_id: @article_id, index: i)
         ArticleCommentReply.create!(parent_article_comment_id: id,
-          children_article_comment_id: i)
+          children_article_comment_id: comment.id)
       end
     end
 
@@ -46,6 +45,10 @@ class ArticleCommentsController < ApplicationController
   def set_params
     @article_id = params[:article_id]
     @last_comment_id = params[:last_comment_id]
+  end
+
+  def find_articles
+    @article = Article.find(@article_id)
   end
   
   def comments_params
