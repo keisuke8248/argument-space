@@ -130,8 +130,10 @@ $(function(){
       } else {
         insertHTML = buildHTML(data);
       }
-      
-      $('.new_comment').append(insertHTML);
+      var comment = $('.new_comment');
+      comment.append(insertHTML);
+      comment.hide();
+      comment.fadeIn(80)
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
     })
@@ -172,13 +174,13 @@ $(function(){
 
   $(document).on('click','.comment__reply#hide', function() {
     var reply = $(this).find('.comment__reply__content');
-    reply.fadeIn(500);
+    reply.fadeIn(300);
     $(this).removeAttr('id');
     $(this).attr('id', 'show');
   })
   $(document).on('click','.comment__reply#show', function(){
     var reply = $(this).find('.comment__reply__content');
-    reply.hide();
+    reply.fadeOut(300);
     $(this).removeAttr('id');
     $(this).attr('id', 'hide');
   });
