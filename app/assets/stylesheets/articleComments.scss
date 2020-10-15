@@ -64,8 +64,10 @@ img#article {
     border-top: $border_color;
   }
   &__reply {
+    &__text {
+      margin: 0 2px 0 3px;
+    }
     &__content {
-
       display: none;
       background-color: #c0c0c0;
     }
@@ -74,7 +76,7 @@ img#article {
       width: 40px;
       border-radius: 8px;
       display: flex;
-      font-size: 12px;
+      font-size: 11px;
       border: $border_color;
       background-color: pink;
     }
