@@ -30,7 +30,7 @@
                   = c.user.nickname
                 .comment__detail__date
                   = time_setting(c.created_at)
-              .comment__text{data: {index: c.index}}
+              .comment__text
                 = c.text
               .comment__evaluation
                 .comment__evaluation__form
@@ -73,7 +73,7 @@
                     返信
                   .comment__reply__count{data: {index: c.index}}
                     = replyCount(id)
-                .comment__reply__content{data: {index: c.index}}
+                .comment__reply__content
                   - if getReplies(id).present?
                     - getReplies(id).each do |c|
                     - myEvaluation = myEvaluation(@article.id, c.id)
@@ -85,7 +85,7 @@
                             = c.user.nickname
                           .comment__detail__date
                             = time_setting(c.created_at)
-                        .comment__text{data: {index: c.index}}
+                        .comment__text
                           = c.text
                         .comment__evaluation
                           .comment__evaluation__form
