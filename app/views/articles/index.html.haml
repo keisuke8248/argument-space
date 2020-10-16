@@ -3,11 +3,11 @@
   .showMain
     .content
       .content__top
-        .content__top__category
-          = link_to "ヘッドライン", articles_path
+        .content__top__category#headLine
+          = link_to "ヘッドライン", articles_path, class: "categoryArray"
         - categoryArrayjp.zip(0..5) do |category, i|
-          .content__top__category
-            = link_to category, article_path(i)
+          .content__top__category{id: i}
+            = link_to category, article_path(i), class: "categoryArray"
       .content__main
         .content__main__left
           - @news.each do |n|

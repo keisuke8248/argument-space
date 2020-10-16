@@ -5,6 +5,14 @@ img {
   max-height: 80px;
 }
 
+.categoryArray {
+  color: white;
+  text-decoration: none;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
 .wrapper {
   width: 100%;
 }
@@ -15,12 +23,17 @@ img {
   &__top {
     display: flex;
     &__category {
+      color: white;
+      background-color: black;
       font-size: 20px;
       height: 42px;
       width: calc(1000px / 6);
       text-align: center;
       line-height: 42px;
       border: $border;
+      &:hover {
+        background-color: rgb(94, 94, 94);
+      }
     }
   }
   &__main{
