@@ -102,7 +102,7 @@ $(function(){
 
   $(document).on('click', '.comment__index', function(){
     var textarea = $('.text_area')
-      var index = $(this).data('index');
+    var index = $(this).data('index');
     var inputVal = '>>' + `${index}` +'\n';
     textarea.val(textarea.val() + inputVal);
   });
@@ -193,4 +193,19 @@ $(function(){
     $(this).removeAttr('id');
     $(this).attr('id', 'hide');
   });
+
+  $("a[href^='#page-top']").on('click', function(){
+    $('html, body').animate({
+      scrollTop: 0
+    },0);
+    return false;
+  });
+
+  $("a[href^='#page-bottom']").on('click', function(){
+    $('html, body').animate({
+      scrollTop: $(document).height()
+    },0);
+    return false;
+  });
 });
+
