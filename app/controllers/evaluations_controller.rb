@@ -3,25 +3,25 @@ class EvaluationsController < ApplicationController
 
   def good
     Evaluation.evaluate(:good, "good", current_user.id, @article_id, @comment_id)
-    sum = view_context.counting_evaluation(@article_id, @comment_id, "good")
+    sum = view_context.counting_evaluation(@comment_id, "good")
     format(sum, @article_id, @comment_id)
   end
 
   def bad
     Evaluation.evaluate(:bad, "bad", current_user.id, @article_id, @comment_id)
-    sum = view_context.counting_evaluation(@article_id, @comment_id, "bad")
+    sum = view_context.counting_evaluation(@comment_id, "bad")
     format(sum, @article_id, @comment_id)
   end
 
   def canceling_good
     Evaluation.canceling_evaluate(current_user.id, @article_id, @comment_id)
-    sum = view_context.counting_evaluation(@article_id, @comment_id, "good")
+    sum = view_context.counting_evaluation(@comment_id, "good")
     format(sum, @article_id, @comment_id)
   end
 
   def canceling_bad
     Evaluation.canceling_evaluate(current_user.id, @article_id, @comment_id)
-    sum = view_context.counting_evaluation(@article_id, @comment_id, "bad")
+    sum = view_context.counting_evaluation(@comment_id, "bad")
     format(sum, @article_id, @comment_id)
   end
 

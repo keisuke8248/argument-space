@@ -1,6 +1,5 @@
 $(function(){
   var url = location.href;
-  console.log(url);
 
   function addCss (e){
     e.css('background-color', 'rgb(94, 94, 94)');

@@ -41,7 +41,7 @@
                       = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") do
                         %i.fas.fa-thumbs-up
                           %span.count_good
-                            = counting_evaluation(@article.id, c.id, "good")
+                            = counting_evaluation(c.id, "good")
                   - else
                     = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
@@ -49,7 +49,7 @@
                       = button_tag type: 'submit', class: "canceling_good_btn" do
                         %i.fas.fa-thumbs-up
                           %span.count_good
-                            = counting_evaluation(@article.id, c.id, "good")
+                            = counting_evaluation(c.id, "good")
                 .comment__evaluation__form
                   - if myEvaluation != "bad"
                     = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
@@ -58,7 +58,7 @@
                       = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") do
                         %i.fas.fa-thumbs-down
                           %span.count_bad
-                            = counting_evaluation(@article.id, c.id, "bad")
+                            = counting_evaluation(c.id, "bad")
                   - else
                     = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
@@ -66,7 +66,7 @@
                       = button_tag type: 'submit', class: "canceling_bad_btn" do
                         %i.fas.fa-thumbs-down
                           %span.count_bad
-                            = counting_evaluation(@article.id, c.id, "bad")
+                            = counting_evaluation(c.id, "bad")
               .comment__reply#hide
                 .comment__reply__btn
                   .comment__reply__text
@@ -96,7 +96,7 @@
                                 = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") do
                                   %i.fas.fa-thumbs-up
                                     %span.count_good
-                                      = counting_evaluation(@article.id, c.id, "good")
+                                      = counting_evaluation(c.id, "good")
                             - else
                               = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
                                 = f.hidden_field :article_id, value: @article.id
@@ -104,7 +104,7 @@
                                 = button_tag type: 'submit', class: "canceling_good_btn" do
                                   %i.fas.fa-thumbs-up
                                     %span.count_good
-                                      = counting_evaluation(@article.id, c.id, "good")
+                                      = counting_evaluation(c.id, "good")
                           .comment__evaluation__form
                             - if myEvaluation != "bad"
                               = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
@@ -113,7 +113,7 @@
                                 = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") do
                                   %i.fas.fa-thumbs-down
                                     %span.count_bad
-                                      = counting_evaluation(@article.id, c.id, "bad")
+                                      = counting_evaluation(c.id, "bad")
                             - else
                               = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
                                 = f.hidden_field :article_id, value: @article.id
@@ -121,7 +121,7 @@
                                 = button_tag type: 'submit', class: "canceling_bad_btn" do
                                   %i.fas.fa-thumbs-down
                                     %span.count_bad
-                                      = counting_evaluation(@article.id, c.id, "bad")
+                                      = counting_evaluation(c.id, "bad")
         .new_comment
 
       = form_with model:[@article, @article_comments], local: true, class: "comment__form", id: "new_article_comment" do |f|
