@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
+  get 'users/show'
   devise_for :users
   root 'articles#index'
+  resources :users, only: [:show]
   resources :groups, only: [:index, :show, :create] do
     member do
       get :api, defaults: { format: 'json' }

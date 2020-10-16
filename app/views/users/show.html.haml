@@ -1,0 +1,12 @@
+= @user.nickname
+
+高評価
+= @good.length
+
+低評価
+= @bad.length
+
+- @articleComment.each do |c|
+  = c.text
+  = time_setting(c.created_at)
+  %br
