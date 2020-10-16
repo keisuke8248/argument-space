@@ -100,10 +100,11 @@ $(function(){
   };
 
 
-  $(document).on('click', '.comment__index', function(){
-    var textarea = $('.text_area')
-    var index = $(this).data('index');
-    var inputVal = '>>' + `${index}` +'\n';
+  $(document).on('click', "a[href^='#index']", function(){
+    let textarea = $('.text_area')
+    let Class = $(this).parent();
+    let index = Class.data('index');
+    let inputVal = '>>' + `${index}` +'\n';
     textarea.val(textarea.val() + inputVal);
   });
   
