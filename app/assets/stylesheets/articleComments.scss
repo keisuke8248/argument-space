@@ -5,6 +5,10 @@ img#article {
   max-height: 100px;
 }
 
+#index {
+  color: black;
+}
+
 .wrapper {
   margin-bottom: 50px;
 }
@@ -109,6 +113,10 @@ img#article {
 .canceling_bad_btn {
   color: blue;
   background-color: rgb(203, 177, 255);
+}
+
+.good_btn, .canceling_good_btn {
+  margin-right: 6px;
 }
 
 .good_btn, .bad_btn, .canceling_good_btn, .canceling_bad_btn {
