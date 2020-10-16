@@ -55,50 +55,6 @@ $(function(){
     return html;
   }
 
-  var searchingReply = function() {
-
-    var comment = $('.comment__text').not('.reply');
-    var length = comment.length;
-    var replyCount;
-
-    //i: >>iのアンカーが存在するか確認
-    //I I+1個めのコメントのテキストを調べているの意味
-    for (var i=1; i<=length; i++) {  //e(コメント)のテキストからアンカーを検索
-      comment.each(function(I, e) {
-        var reply = $(`.comment__reply__content[data-index=${i}]`);
-
-        if (I === 0) {
-          reply.html('');
-          replyCount = 0;
-        }
-        //debugger;
-        var text = $(e).text();
-        let anchor = `>>${i}`
-        var pattern = new RegExp(anchor + "(?!\\d+)");
-        var result = pattern.test(text);
-
-        if (result === true) {
-          //debugger;
-          replyCount++;
-          let commentClass = $(e).parent('.comment')//テキストの親のコメントクラス
-          let commentToBeAppended = commentClass.clone();//クローン
-          commentToBeAppended.find('.comment').addClass('reply');//replyクラスを付与して返信であることを明示
-          //commentToBeAppended.find('.comment__reply__content').addClass('reply');
-          //$(e).addClass('reply');
-          reply.append(commentToBeAppended);
-          
-          //返信数が更新されたら何かアニメーションをつけたい
-        }
-
-        if (length === I+1) {
-          //debugger;
-          let Class = $(`.comment__reply__count[data-index=${i}]`);
-          Class.html(replyCount);
-        }
-      });
-    }
-  };
-
 
   $(document).on('click', "a[href^='#index']", function(){
     let textarea = $('.text_area')
@@ -209,4 +165,3 @@ $(function(){
     return false;
   });
 });
-
