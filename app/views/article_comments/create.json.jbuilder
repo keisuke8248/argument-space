@@ -4,6 +4,7 @@ if @new_comment.length == 1
   json.article_id @new_comment.first.article_id
   json.text @new_comment.first.text
   json.nickname @new_comment.first.user.nickname
+  json.user_id @new_comment.first.user.id
   json.date time_setting(@new_comment.first.created_at)
   json.anchor @anchors
 else
@@ -14,6 +15,7 @@ else
       json.article_id comment.article_id
       json.text comment.text
       json.nickname comment.user.nickname
+      json.user_id comment.user.id
       json.date time_setting(comment.created_at)
     end
   end

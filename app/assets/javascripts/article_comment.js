@@ -5,11 +5,13 @@ $(function(){
       const html = `<div class="comment" data-comment-id=${comment.id}>
                       <div class="comment__detail">
                         <div class="comment__index" data-index="${comment.index}">
-                          ${comment.index}:
+                          <a id="index" href="#index">
+                          ${comment.index}
+                          </a>
                         </div>
-                        <div class="comment__detail__nickname">
+                        <a class="comment__detail__nickname" href="user/${comment.user_id}">
                           ${comment.nickname}
-                        </div>
+                        </a>
                         <div class="comment__detail__date">
                           ${comment.date}
                         </div>
@@ -62,6 +64,11 @@ $(function(){
     let index = Class.data('index');
     let inputVal = '>>' + `${index}` +'\n';
     textarea.val(textarea.val() + inputVal);
+    $('html, body').animate({
+      scrollTop: $(document).height()
+    },0);
+    return false;
+
   });
   
   $('#new_article_comment').on('submit', function(e){
