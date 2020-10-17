@@ -1,5 +1,5 @@
 $(function(){
-  
+
   function buildHTML(comment){
 
       const html = `<div class="comment" data-comment-id=${comment.id}>
@@ -169,6 +169,7 @@ $(function(){
     $('html, body').animate({
       scrollTop: $(document).height()
     },0);
+    $('.text_area').focus();
     return false;
   });
 });
