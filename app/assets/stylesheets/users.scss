@@ -1,3 +1,90 @@
-// Place all the styles related to the users controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
+$border: 1px solid #e1e1e1;;
+
+.wrapper {
+  width: 100%;
+}
+
+.content {
+  width: 1000px;
+  margin: auto;
+}
+
+.content__header {
+  display: flex;
+  position: relative;
+  height:50px;
+  width: 300px;
+  margin: 20px 0 20px 0;
+  &__nickname {
+    font-size: 40px;
+    font-family: 'arial black';
+  }
+  &__text {
+    font-size: 20px;
+    position: absolute;
+    bottom: 0;
+    margin-left: 80px;
+  }
+}
+
+.mainItem {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: space-between;
+  border: $border;
+
+  &__left {
+    width: 500px;
+    &__header {
+      text-align: center;
+      line-height: 40px;
+      font-weight: bold;
+      border-bottom: $border;
+    }
+    &__content {
+      padding: 10px 20px 20px 20px;
+      &__comment {
+        padding: 8px 0; 
+        &:not(:first-child){
+          border-top: $border;
+        }
+        &__detail {
+          display: flex;
+          margin-bottom: 4px;
+          &__evaluation {
+            margin-left: 4px;
+          }
+        }
+      }
+    }
+  }
+  &__right {
+    width: 500px;
+    padding-top: 50px;
+    border-left: $border;
+    &__count {
+      margin-top: 30px;
+      margin: auto;
+      width: 40%;
+      display: flex;
+      justify-content: space-between;
+
+    }
+    &__graph {
+      padding-top: 50px;
+
+    }
+  }
+}
+
+.fas {
+  font-size: 6px;
+}
+
+.fa-thumbs-up {
+  color: red;
+}
+
+.fa-thumbs-down {
+  color: blue;
+}

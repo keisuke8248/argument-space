@@ -1,12 +1,38 @@
-= @user.nickname
+= stylesheet_link_tag "users", media: :all
+.wrapper
+  .content
+    .content__header
+      .content__header__nickname
+        = @user.nickname
+      .content__header__text
+        さんのマイページ
+    .mainItem
+      .mainItem__left
+        .mainItem__left__header
+          最新コメント10件
+        .mainItem__left__content
+          - @articleComments.each do |c|
+            .mainItem__left__content__comment
+              .mainItem__left__content__comment__detail
+                .mainItem__left__content__comment__detail__date
+                  = time_setting(c.created_at)
+                .mainItem__left__content__comment__detail__evaluation
+                  %i.fas.fa-thumbs-up
+                    %span.mainItem__left__content__comment__detail__evaluation__good
+                      = counting_evaluation(c.id, "good")
+                  %i.fas.fa-thumbs-down
+                    %span.mainItem__left__content__comment__detail__evaluation__bad
+                      = counting_evaluation(c.id, "bad")
+              .mainItem__left__content__comment__text
+                = c.text
+      .mainItem__right
+        .mainItem__right__count
+          .mainItem__right__count__good
+            = "高評価  " + @good.length.to_s
+          .mainItem__right__count__bad
+            = "低評価  " + @bad.length.to_s
+        .mainItem__right__graph
+          = pie_chart [["低評価", @bad.length], ["高評価", @good.length]]
 
-高評価
-= @good.length
 
-低評価
-= @bad.length
 
-- @articleComment.each do |c|
-  = c.text
-  = time_setting(c.created_at)
-  %br
