@@ -1,7 +1,12 @@
 module ArticleCommentsHelper
 
-  def myEvaluation(article_id, comment_id)
-    evaluation = Evaluation.find_by(article_id: article_id, article_comment_id: comment_id, user_id: current_user.id)
+  def myEvaluation(comment_id)
+    if user_signed_in?
+      evaluation = Evaluation.find_by(article_comment_id: comment_id, user_id: current_user.id)
+    else
+      return "blank"
+    end
+
     if evaluation.blank?
       return "blank"
     elsif evaluation.good == 1
@@ -25,4 +30,5 @@ module ArticleCommentsHelper
     end
     return a
   end
+
 end
