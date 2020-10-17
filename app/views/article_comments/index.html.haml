@@ -26,8 +26,7 @@
               .comment__detail
                 .comment__index{data: {index: c.index}}
                   = link_to "#{c.index}" + ":", "#index", id: :index
-                .comment__detail__nickname
-                  = c.user.nickname
+                = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
                 .comment__detail__date
                   = time_setting(c.created_at)
               .comment__text
@@ -82,7 +81,7 @@
                           .comment__index{data: {index: c.index}}
                             = "#{c.index}" + ":"
                           .comment__detail__nickname
-                            = c.user.nickname
+                            = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
                           .comment__detail__date
                             = time_setting(c.created_at)
                         .comment__text
