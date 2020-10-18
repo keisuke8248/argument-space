@@ -31,4 +31,10 @@ module ArticleCommentsHelper
     return a
   end
 
+  def form_availavility(key, myEvaluation, c)
+    if myEvaluation == key || !(user_signed_in?) || current_user.id == c.user_id
+      return true
+    end
+  end
+
 end

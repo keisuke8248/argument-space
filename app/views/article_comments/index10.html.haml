@@ -37,7 +37,7 @@
                     = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: c.id
-                      = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") || !(user_signed_in?) do
+                      = button_tag type: 'submit', class: "good_btn", disabled: form_availavility("bad", myEvaluation, c) do
                         %i.fas.fa-thumbs-up
                           %span.count_good
                             = counting_evaluation(c.id, "good")
@@ -54,7 +54,7 @@
                     = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
                       = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: c.id
-                      = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") || !(user_signed_in?) do
+                      = button_tag type: 'submit', class: "bad_btn", disabled: form_availavility("good", myEvaluation, c) do
                         %i.fas.fa-thumbs-down
                           %span.count_bad
                             = counting_evaluation(c.id, "bad")
@@ -90,7 +90,7 @@
                               = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
                                 = f.hidden_field :article_id, value: @article.id
                                 = f.hidden_field :comment_id, value: c.id
-                                = button_tag type: 'submit', class: "good_btn", disabled: (myEvaluation == "bad") || !(user_signed_in?) do
+                                = button_tag type: 'submit', class: "good_btn", disabled: form_availavility("bad", myEvaluation, c) do
                                   %i.fas.fa-thumbs-up
                                     %span.count_good
                                       = counting_evaluation(c.id, "good")
@@ -107,7 +107,7 @@
                               = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
                                 = f.hidden_field :article_id, value: @article.id
                                 = f.hidden_field :comment_id, value: c.id
-                                = button_tag type: 'submit', class: "bad_btn", disabled: (myEvaluation == "good") || !(user_signed_in?) do
+                                = button_tag type: 'submit', class: "bad_btn", disabled: form_availavility("good", myEvaluation, c) do
                                   %i.fas.fa-thumbs-down
                                     %span.count_bad
                                       = counting_evaluation(c.id, "bad")
