@@ -28,11 +28,11 @@
       .mainItem__right
         .mainItem__right__count
           .mainItem__right__count__good
-            = "高評価  " + @good.length.to_s
+            = "高評価 #{@good.to_s} (#{rate(@good, @bad)}%)"
           .mainItem__right__count__bad
-            = "低評価  " + @bad.length.to_s
+            = "低評価  " + @bad.to_s
         .mainItem__right__graph
-          = pie_chart [["低評価", @bad.length], ["高評価", @good.length]]
+          = pie_chart [["低評価", @bad], ["高評価", @good]]
 
 
 
