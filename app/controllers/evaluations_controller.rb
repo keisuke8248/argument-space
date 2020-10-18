@@ -2,13 +2,14 @@ class EvaluationsController < ApplicationController
   before_action :set_params
 
   def good
-    Evaluation.evaluate(:good, "good", current_user.id, @article_id, @comment_id)
+    Evaluation.evaluate(:good, "good", current_user.id, @article_id, @comment_id, current_user.id
+    )
     sum = view_context.counting_evaluation(@comment_id, "good")
     format(sum, @article_id, @comment_id)
   end
 
   def bad
-    Evaluation.evaluate(:bad, "bad", current_user.id, @article_id, @comment_id)
+    Evaluation.evaluate(:bad, "bad", current_user.id, @article_id, @comment_id, current_user.id)
     sum = view_context.counting_evaluation(@comment_id, "bad")
     format(sum, @article_id, @comment_id)
   end
