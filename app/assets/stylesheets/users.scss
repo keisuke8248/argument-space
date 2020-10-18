@@ -7,23 +7,20 @@ $border: 1px solid #e1e1e1;;
 .content {
   width: 1000px;
   margin: auto;
-}
-
-.content__header {
-  display: flex;
-  position: relative;
-  height:50px;
-  width: 300px;
-  margin: 20px 0 20px 0;
-  &__nickname {
-    font-size: 40px;
-    font-family: 'arial black';
-  }
-  &__text {
-    font-size: 20px;
-    position: absolute;
-    bottom: 0;
-    margin-left: 80px;
+  &__header {
+    display: flex;
+    align-items: baseline;
+    height:50px;
+    width: 300px;
+    margin: 20px 0 20px 0;
+    &__nickname {
+      font-size: 40px;
+    }
+    &__text {
+      font-size: 20px;
+      bottom: 0;
+      margin-left: 10px;
+    }
   }
 }
 
@@ -65,14 +62,12 @@ $border: 1px solid #e1e1e1;;
     &__count {
       margin-top: 30px;
       margin: auto;
-      width: 40%;
+      width: 50%;
       display: flex;
       justify-content: space-between;
-
     }
     &__graph {
-      padding-top: 50px;
-
+      padding: 50px 0;
     }
   }
 }
