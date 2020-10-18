@@ -6,7 +6,7 @@ $(function(){
                       <div class="comment__detail">
                         <div class="comment__index" data-index="${comment.index}">
                           <a id="index" href="#index">
-                          ${comment.index}
+                          ${comment.index}:
                           </a>
                         </div>
                         <a class="comment__detail__nickname" href="user/${comment.user_id}">
@@ -25,7 +25,7 @@ $(function(){
                             <input name="utf8" type="hidden" value="✓"></input>
                             <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                            <button name="button" type="submit" class="good_btn">
+                            <button name="button" type="submit" class="good_btn" disabled="disabled">
                               <i class="fas fa-thumbs-up">
                                 <span class="count_good">0</span>
                               </i>
@@ -37,7 +37,7 @@ $(function(){
                             <input name="utf8" type="hidden" value="✓"></input>
                             <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                            <button name="button" type="submit" class="bad_btn">
+                            <button name="button" type="submit" class="bad_btn" disabled="disabled">
                               <i class="fas fa-thumbs-down">
                                 <span class="count_bad">0</span>
                               </i>
@@ -47,8 +47,8 @@ $(function(){
                       </div>
                       <div class="comment__reply" id="hide">
                         <div class="comment__reply__btn">
-                          <div class"comment__reply__text">返信</div>
-                          <div class"comment__reply__count" data-index=${comment.index}>0</div>
+                          <div class="comment__reply__text">返信</div>
+                          <div class="comment__reply__count" data-index=${comment.index}>0</div>
                         </div>
                       <div class="comment__reply__content" data-index=${comment.index}></div>
                     </div>
