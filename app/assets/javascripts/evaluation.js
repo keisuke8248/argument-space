@@ -1,7 +1,7 @@
 $(function(){
 
   function buildHTML(data, Class1, Class2, value){
-    let comment = $(`.comment[data-comment-id=${data.comment_id}]`).not('.reply');
+    let comment = $(`.comment[data-comment-id=${data.comment_id}]`).not('#reply');
     let form = comment.find(`.evaluation_form_${Class1}`).first();
     
     if (value === "good") {

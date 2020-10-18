@@ -5,7 +5,7 @@ img#article {
   max-height: 100px;
 }
 
-#index {
+.indexLink {
   color: black;
 }
 
@@ -17,7 +17,7 @@ img#article {
   margin: 10px 10px;
 }
 
-.article {
+a.article {
   &__header {
     display: flex;
     &__title {
