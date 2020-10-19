@@ -34,12 +34,12 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
   end
 
   create_table "articles", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "url", null: false
+    t.text "title", null: false
+    t.text "url", null: false
     t.text "description"
-    t.string "author"
-    t.string "publishedAt"
-    t.string "urlToImage"
+    t.text "author"
+    t.text "publishedAt"
+    t.text "urlToImage"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
