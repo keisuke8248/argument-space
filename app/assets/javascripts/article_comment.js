@@ -50,7 +50,7 @@ $(function(){
                           <div class="comment__reply__text">返信</div>
                           <div class="comment__reply__count" data-index=${comment.index}>0</div>
                         </div>
-                      <div class="comment__reply__content"></div>
+                      <div class="comment__reply__content" data-index=${comment.index}></div>
                     </div>
                   </div>
                   <div class="new_comment"></div>`
@@ -107,12 +107,14 @@ $(function(){
   }
 
   function appendReply(index, data) {
-    let Class = $(`.comment__reply__count[data-index=${index}]`);
-              let val = Class.text();
-              val++;
-              Class.text(val);
-              let reply = $(`.comment__reply__content[data-index=${index}]`);
-              reply.append(buildREPLY(data));
+    $(document).ready(function(){
+      let Class = $(`.comment__reply__count[data-index=${index}]`);
+      let val = Class.text();
+      val++;
+      Class.text(val);
+      let reply = $(`.comment__reply__content[data-index=${index}]`);
+      reply.append(buildREPLY(data));
+    })
   }
 
   $(document).on('click', "a[href^='#index']", function(){
