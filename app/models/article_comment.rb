@@ -6,10 +6,4 @@ class ArticleComment < ApplicationRecord
 
   validates :index, uniqueness: true
 
-  def self.searchAnchor(i)
-    if />>#{i}[^\d]/.match(self)
-      return i
-    end
-  end
-
 end
