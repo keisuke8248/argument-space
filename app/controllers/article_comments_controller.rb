@@ -18,20 +18,26 @@ class ArticleCommentsController < ApplicationController
     id = article_comment.id
     length = ArticleComment.where(article_id: @article_id).length
     text = article_comment.text
-    @anchors = []
-
-    (1..length).each do |i|
-      if />>#{i}[^\d]/.match(text)
-        comment = ArticleComment.find_by(article_id: @article_id, index: i)
-        ArticleCommentReply.create(parent_article_comment_id: id,
-                                    children_article_comment_id: comment.id)
-      @anchors << i
-      end
-    end
 
     article_comment.update(index: length.to_i)
-    @new_comment = ArticleComment.where('article_id = ? and id > ? and id <= ?', 
+    @new_comment = ArticleComment.includes(:user).where('article_id = ? and id > ? and id <= ?', 
                                         @article_id, @last_comment_id, article_comment.id)
+    @anchors= []
+    @new_comment.each do |c|
+      a = c.text.scan(/(?<=\>>)\d+/).uniq
+      array = []
+      if a == nil
+        array.push(nil)
+      else
+        a.each do |a|
+          comment = ArticleComment.find_by(article_id: @article_id, index: a)
+          ArticleCommentReply.create(parent_article_comment_id: c.id,
+                                     children_article_comment_id: comment.id)
+          array.push(a)
+        end
+      end
+      @anchors.push(array)
+    end
     respond_to do |format|
       format.html { redirect_to article_article_comments_path(@article_id)}
       format.json

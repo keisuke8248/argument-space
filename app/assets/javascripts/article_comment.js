@@ -58,7 +58,7 @@ $(function(){
   }
 
   function buildREPLY(comment) {
-    
+
     let html = `<div class="comment" id="reply" data-comment-id=${comment.id}>
                  <div class="comment__detail">
                    <div class="comment__index" data-index="${comment.index}">
@@ -106,6 +106,15 @@ $(function(){
     return html;
   }
 
+  function appendReply(index, data) {
+    let Class = $(`.comment__reply__count[data-index=${index}]`);
+              let val = Class.text();
+              val++;
+              Class.text(val);
+              let reply = $(`.comment__reply__content[data-index=${index}]`);
+              reply.append(buildREPLY(data));
+  }
+
   $(document).on('click', "a[href^='#index']", function(){
     let textarea = $('.text_area')
     let Class = $(this).parent();
@@ -134,24 +143,23 @@ $(function(){
       contentType: false
     })
     .done(function(data){
-      if ($.isArray(data.comment1)) {
+      let anchors = data.anchors
+      if ($.isArray(data.comment)) {
         var insertHTML = '';
-        $.each(data.comment1, function(i, comment) {
-          insertHTML += buildHTML(comment);
+        $.each(data.comment, function(i, c) {
+          insertHTML += buildHTML(c);
+          $.each(anchors[i].anchor, function(i, anchor) {
+            $(document).ready(function() {
+              appendReply(anchor, c);
+            });
+          })
         });
-        console.log(data);
-        console.log(data.comment2);
+
       } else {
-        insertHTML = buildHTML(data);
-        let anchor = data.anchor
-        $.each(anchor, function(i, e) {
+        insertHTML = buildHTML(data.comment);
+        $.each(anchors, function(i, e) {
           $(document).ready(function() {
-            let Class = $(`.comment__reply__count[data-index=${e}]`);
-            let val = Class.text();
-            val++;
-            Class.text(val);
-            let reply = $(`.comment__reply__content[data-index=${e}]`);
-            reply.append(buildREPLY(data));
+            appendReply(e.anchor, data.comment);
           });
         })
 
