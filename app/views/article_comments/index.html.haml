@@ -35,7 +35,6 @@
                 .comment__evaluation__form
                   - if myEvaluation != "good"
                     = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
-                      = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
                       = button_tag type: 'submit', class: "good_btn", disabled: form_availavility("bad", myEvaluation, c) do
                         %i.fas.fa-thumbs-up
@@ -43,7 +42,6 @@
                             = counting_evaluation(id, "good")
                   - else
                     = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
-                      = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
                       = button_tag type: 'submit', class: "canceling_good_btn" do
                         %i.fas.fa-thumbs-up
@@ -52,7 +50,6 @@
                 .comment__evaluation__form
                   - if myEvaluation != "bad"
                     = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
-                      = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
                       = button_tag type: 'submit', class: "bad_btn", disabled: form_availavility("good", myEvaluation, c) do
                         %i.fas.fa-thumbs-down
@@ -60,7 +57,6 @@
                             = counting_evaluation(id, "bad")
                   - else
                     = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
-                      = f.hidden_field :article_id, value: @article.id
                       = f.hidden_field :comment_id, value: id
                       = button_tag type: 'submit', class: "canceling_bad_btn" do
                         %i.fas.fa-thumbs-down

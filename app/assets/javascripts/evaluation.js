@@ -11,8 +11,7 @@ $(function(){
     }
 
 
-    let insertHTML = buildHTML2(data.article_id,
-                                data.comment_id,
+    let insertHTML = buildHTML2(data.comment_id,
                                 `${Class2}_btn`,
                                 value,
                                 UpDown,
@@ -41,10 +40,9 @@ $(function(){
     }
   }
 
-  function buildHTML2(article_id, comment_id, Class, value, UpDown, sum) {
+  function buildHTML2(comment_id, Class, value, UpDown, sum) {
     let html = `
                <input name="utf8" type="hidden" value="✓"></input>
-               <input value="${article_id}" type="hidden" name="article_id" id="article_id"></input>
                <input value="${comment_id}" type="hidden" name="comment_id" id="comment_id"></input>
                <button name="button" type="submit" class=${Class}>
                  <i class="fas fa-thumbs-${UpDown}">

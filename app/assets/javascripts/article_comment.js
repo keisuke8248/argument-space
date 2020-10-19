@@ -23,7 +23,6 @@ $(function(){
                         <div class="comment__evaluation__form">
                           <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
                             <input name="utf8" type="hidden" value="✓"></input>
-                            <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                             <button name="button" type="submit" class="good_btn" disabled="disabled">
                               <i class="fas fa-thumbs-up">
@@ -35,7 +34,6 @@ $(function(){
                         <div class="comment__evaluation__form">
                           <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
                             <input name="utf8" type="hidden" value="✓"></input>
-                            <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                             <button name="button" type="submit" class="bad_btn" disabled="disabled">
                               <i class="fas fa-thumbs-down">
@@ -80,7 +78,6 @@ $(function(){
                    <div class="comment__evaluation__form">
                      <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
                        <input name="utf8" type="hidden" value="✓"></input>
-                       <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                        <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                        <button name="button" type="submit" class="good_btn" disabled="disabled">
                          <i class="fas fa-thumbs-up">
@@ -92,7 +89,6 @@ $(function(){
                    <div class="comment__evaluation__form">
                      <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
                        <input name="utf8" type="hidden" value="✓"></input>
-                       <input value=${comment.article_id} type="hidden" name="article_id" id="article_id"></input>
                        <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
                        <button name="button" type="submit" class="bad_btn" disabled="disabled">
                          <i class="fas fa-thumbs-down">

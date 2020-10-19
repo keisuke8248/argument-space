@@ -57,14 +57,12 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
   create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "good", default: 0, null: false
     t.integer "bad", default: 0, null: false
-    t.bigint "article_id"
     t.bigint "article_comment_id"
     t.bigint "user_id"
     t.bigint "children_user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_comment_id"], name: "index_evaluations_on_article_comment_id"
-    t.index ["article_id"], name: "index_evaluations_on_article_id"
     t.index ["children_user_id"], name: "index_evaluations_on_children_user_id"
     t.index ["user_id"], name: "index_evaluations_on_user_id"
   end
@@ -116,7 +114,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
   add_foreign_key "comments", "groups"
   add_foreign_key "comments", "users"
   add_foreign_key "evaluations", "article_comments"
-  add_foreign_key "evaluations", "articles"
   add_foreign_key "evaluations", "users"
   add_foreign_key "evaluations", "users", column: "children_user_id"
   add_foreign_key "favorites", "comments"
