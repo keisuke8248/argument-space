@@ -1,14 +1,12 @@
 class ArticleCommentsController < ApplicationController
   before_action :set_params
-  before_action :find_articles
+  before_action :find_articles_and_comments, only: [:index, :index10]
 
   def index
-    @comments = ArticleComment.includes(:article).where(article_id: @article_id)
     @article_comments = ArticleComment.new
   end
 
   def index10
-    comments = ArticleComment.includes(:article).where(article_id: @article_id)
     @comments = comments.order("created_at DESC").limit(10).reverse
     @article_comments = ArticleComment.new
   end
@@ -55,7 +53,8 @@ class ArticleCommentsController < ApplicationController
     @last_comment_id = params[:last_comment_id]
   end
 
-  def find_articles
+  def find_articles_and_comments
+    @comments = ArticleComment.includes(:article, :user).where(article_id: @article_id)
     @article = Article.find(@article_id)
   end
   
