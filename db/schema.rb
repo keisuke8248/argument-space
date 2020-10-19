@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["article_id"], name: "index_article_comments_on_article_id"
+    t.index ["index"], name: "index_article_comments_on_index", unique: true
     t.index ["user_id"], name: "index_article_comments_on_user_id"
   end
 
