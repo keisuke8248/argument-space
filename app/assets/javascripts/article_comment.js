@@ -107,14 +107,12 @@ $(function(){
   }
 
   function appendReply(index, data) {
-    $(document).ready(function(){
-      let Class = $(`.comment__reply__count[data-index=${index}]`);
-      let val = Class.text();
-      val++;
-      Class.text(val);
-      let reply = $(`.comment__reply__content[data-index=${index}]`);
-      reply.append(buildREPLY(data));
-    })
+    let Class = $(`.comment__reply__count[data-index=${index}]`);
+    let val = Class.text();
+    val++;
+    Class.text(val);
+    let reply = $(`.comment__reply__content[data-index=${index}]`);
+    reply.append(buildREPLY(data));
   }
 
   $(document).on('click', "a[href^='#index']", function(){
