@@ -12,32 +12,42 @@ class ArticleCommentsController < ApplicationController
   end
 
   def create
-    article_comment = ArticleComment.create(comments_params)
-    id = article_comment.id
+    posted_comment = ArticleComment.create(comments_params)
     length = ArticleComment.where(article_id: @article_id).length
-    text = article_comment.text
+    posted_comment.update(index: length.to_i)
+    id = posted_comment.id
+############投稿されたコメントのアンカーを登録
+    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq
+    if anchors1.present?
+      anchors1.each do |a|
+        ArticleCommentReply.create(parent_article_comment_id: id,
+                                   children_article_comment_id: a)
+      end
+    end
 
-    article_comment.update(index: length.to_i)
+#############表示するコメントのアンカーを取得、配列に入れる
     @new_comment = ArticleComment.includes(:user).where('article_id = ? and id > ? and id <= ?', 
-                                        @article_id, @last_comment_id, article_comment.id)
+                                                        @article_id, @last_comment_id, posted_comment.id)
     @anchors= []
     @new_comment.each do |c|
-      a = c.text.scan(/(?<=\>>)\d+/).uniq
+      replies = ArticleCommentReply.where(parent_article_comment_id: c.id)
       array = []
-      if a == nil
-        array.push(nil)
-      else
-        a.each do |a|
-          comment = ArticleComment.find_by(article_id: @article_id, index: a)
-          ArticleCommentReply.create(parent_article_comment_id: c.id,
-                                     children_article_comment_id: comment.id)
-          array.push(a)
+      replies.each do |reply|
+        childrenId = reply.children_article_comment_id
+        children = ArticleComment.where(id: childrenId)
+        children.each do |child|
+        index = child.index
+          if index == nil
+            array.push(nil)
+          else
+            array.push(index)
+          end
         end
+        @anchors.push(array)
       end
-      @anchors.push(array)
     end
     respond_to do |format|
-      format.html { redirect_to article_article_comments_path(@article_id)}
+      #format.html { redirect_to article_article_comments_path(@article_id)}
       format.json
     end
   end
