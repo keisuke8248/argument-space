@@ -23,7 +23,11 @@ class ArticlesController < ApplicationController
   
   def create_articles
     @news.each do |n|
-      Article.createArticles(title: n.title, url: n.url, description: n.description, author: n.author, publishedAt: n.publishedAt, urlToImage: n.urlToImage)
+      if n.author == "netkeiba.com"
+        Article.createArticles(title: n.title, url: n.url, author: n.author, publishedAt: n.publishedAt, urlToImage: n.urlToImage)
+      else
+        Article.createArticles(title: n.title, url: n.url, description: n.description, author: n.author, publishedAt: n.publishedAt, urlToImage: n.urlToImage)
+      end
     end
   end
 
