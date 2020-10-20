@@ -13,4 +13,9 @@ class User < ApplicationRecord
   validates :nickname, presence: true, length: {maximum: 8}
   validates :email, presence: true
   validates :password, presence: true
+
+  def remember_me
+    true
+  end
+  
 end
