@@ -8,6 +8,5 @@ class CreateArticleComments < ActiveRecord::Migration[5.2]
 
       t.timestamps
     end
-    add_index :article_comments, :index, unique: true
   end
 end
