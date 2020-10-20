@@ -32,7 +32,7 @@ class ArticlesController < ApplicationController
   end
 
   def set_articleComments
-    @articleComments = ArticleComment.order('id DESC').limit(15)
+    @articleComments = ArticleComment.order('id DESC').limit(20)
   end
 
 end
