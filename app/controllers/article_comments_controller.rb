@@ -13,10 +13,11 @@ class ArticleCommentsController < ApplicationController
 
   def create
     posted_comment = ArticleComment.create(comments_params)
+    #updatedText = posted_comment.text.gsub(/>>\d+\n/,"")
+    #posted_comment.update(text: updatedText)
     length = ArticleComment.where(article_id: @article_id).length
     posted_comment.update(index: length.to_i)
     id = posted_comment.id
-############投稿されたコメントのアンカーを登録
     anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq
     if anchors1.present?
       anchors1.each do |a|
@@ -25,7 +26,6 @@ class ArticleCommentsController < ApplicationController
       end
     end
 
-#############表示するコメントのアンカーを取得、配列に入れる
     @new_comment = ArticleComment.includes(:user).where('article_id = ? and id > ? and id <= ?', 
                                                         @article_id, @last_comment_id, posted_comment.id)
     @anchors= []
@@ -47,7 +47,7 @@ class ArticleCommentsController < ApplicationController
       end
     end
     respond_to do |format|
-      #format.html { redirect_to article_article_comments_path(@article_id)}
+      format.html { redirect_to article_article_comments_path(@article_id)}
       format.json
     end
   end
