@@ -1,0 +1,126 @@
+= stylesheet_link_tag "articleComments", media: :all
+.wrapper
+  .showMain
+    .content
+      .article
+        .article__header
+          .article__header__image
+            = image_tag @article.urlToImage.to_s, id: "article"
+          .article__header__title{data: {article: {id: @article.id}}}
+            = link_to @article.title.to_s, @article.url, target: :_blank
+        .article__detail
+          .article__detail__publishedAt
+            = @article.publishedAt
+          .article__detail__author
+            = @article.author
+        .article__description
+          = @article.description
+      = link_to "全部", article_article_comments_path(@article.id)
+      = link_to "最新10", index10_article_article_comments_path(@article.id)
+      = link_to "下", "#page-bottom"
+      .comments
+        - if @comment.present?
+        - c = @comment
+        - id = @comment.id
+        - myEvaluation = myEvaluation(id)
+          .comment{data: {comment: {id: id}}}
+            .comment__detail
+              .comment__index{data: {index: c.index}}
+                = link_to "#{c.index}" + ":", "#index", class: :indexLink
+              = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
+              .comment__detail__date
+                = time_setting(c.created_at)
+            .comment__text{data: {comment: id}}
+              = c.text
+            .comment__evaluation
+              .comment__evaluation__form
+                - if myEvaluation != "good"
+                  = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
+                    = f.hidden_field :comment_id, value: id
+                    = button_tag type: 'submit', class: "good_btn", disabled: form_availavility("bad", myEvaluation, c) do
+                      %i.fas.fa-thumbs-up
+                        %span.count_good
+                          = counting_evaluation(id, "good")
+                - else
+                  = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
+                    = f.hidden_field :comment_id, value: id
+                    = button_tag type: 'submit', class: "canceling_good_btn" do
+                      %i.fas.fa-thumbs-up
+                        %span.count_good
+                          = counting_evaluation(id, "good")
+              .comment__evaluation__form
+                - if myEvaluation != "bad"
+                  = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
+                    = f.hidden_field :comment_id, value: id
+                    = button_tag type: 'submit', class: "bad_btn", disabled: form_availavility("good", myEvaluation, c) do
+                      %i.fas.fa-thumbs-down
+                        %span.count_bad
+                          = counting_evaluation(id, "bad")
+                - else
+                  = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
+                    = f.hidden_field :comment_id, value: id
+                    = button_tag type: 'submit', class: "canceling_bad_btn" do
+                      %i.fas.fa-thumbs-down
+                        %span.count_bad
+                          = counting_evaluation(id, "bad")
+            .comment__reply#hide
+              .comment__reply__btn
+                .comment__reply__text
+                  返信
+                .comment__reply__count{data: {index: c.index}}
+                  = replyCount(id)
+              .comment__reply__content{data: {index: c.index}}
+                - if getReplies(id).present?
+                  - getReplies(id).each do |c|
+                    .comment#reply{data: {comment: {id: id}}}
+                      .comment__detail
+                        .comment__index{data: {index: c.index}}
+                          = link_to "#{c.index}" + ":", "#index", class: :indexLink
+                        = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
+                        .comment__detail__date
+                          = time_setting(c.created_at)
+                      .comment__text{data: {comment: c.id}}
+                        = c.text
+                      .comment__evaluation
+                        .comment__evaluation__form
+                          - if myEvaluation != "good"
+                            = form_with url: good_evaluations_path, class: "evaluation_form_good", local: true do |f|
+                              = f.hidden_field :article_id, value: @article.id
+                              = f.hidden_field :comment_id, value: c.id
+                              = button_tag type: 'submit', class: "good_btn", disabled: form_availavility("bad", myEvaluation, c)  do
+                                %i.fas.fa-thumbs-up
+                                  %span.count_good
+                                    = counting_evaluation(id, "good")
+                          - else
+                            = form_with url: canceling_good_evaluations_path, class: "evaluation_form_canceling_good", local: true do |f|
+                              = f.hidden_field :article_id, value: @article.id
+                              = f.hidden_field :comment_id, value: c.id
+                              = button_tag type: 'submit', class: "canceling_good_btn" do
+                                %i.fas.fa-thumbs-up
+                                  %span.count_good
+                                    = counting_evaluation(c.id, "good")
+                        .comment__evaluation__form
+                          - if myEvaluation != "bad"
+                            = form_with url: bad_evaluations_path, class: "evaluation_form_bad", local: true do |f|
+                              = f.hidden_field :article_id, value: @article.id
+                              = f.hidden_field :comment_id, value: c.id
+                              = button_tag type: 'submit', class: "bad_btn", disabled: form_availavility("good", myEvaluation, c) do
+                                %i.fas.fa-thumbs-down
+                                  %span.count_bad
+                                    = counting_evaluation(c.id, "bad")
+                          - else
+                            = form_with url: canceling_bad_evaluations_path, class: "evaluation_form_canceling_bad", local: true do |f|
+                              = f.hidden_field :article_id, value: @article.id
+                              = f.hidden_field :comment_id, value: c.id
+                              = button_tag type: 'submit', class: "canceling_bad_btn" do
+                                %i.fas.fa-thumbs-down
+                                  %span.count_bad
+                                    = counting_evaluation(c.id, "bad")
+        .new_comment
+
+      = form_with model:[@article, @article_comments], local: true, class: "comment__form", id: "new_article_comment" do |f|
+        = f.text_area :text, placeholder: "コメントを入力してください", class: "text_area", cols: "60", rows: "8", maxlength: "500", disabled: !(user_signed_in?)
+        = f.submit "投稿する", class: "submit_comment", disabled: !(user_signed_in?)
+    = link_to "全部", article_article_comments_path(@article.id)
+    = link_to "最新10", index10_article_article_comments_path(@article.id)
+    = link_to "上", "#page-top"

@@ -15,7 +15,7 @@ Rails.application.routes.draw do
     end
   end
   resources :articles, only: [:index, :show] do
-    resources :article_comments, only: [:index, :create] do
+    resources :article_comments, only: [:index, :show, :create] do
       collection do
         get :index10
         get :api, defaults: {format: 'json'}

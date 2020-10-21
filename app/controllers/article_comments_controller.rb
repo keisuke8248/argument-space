@@ -1,28 +1,35 @@
 class ArticleCommentsController < ApplicationController
   before_action :set_params
-  before_action :find_articles_and_comments, only: [:index, :index10]
+  before_action :find_comments, only: [:index, :index10]
+  before_action :find_articles, except: [:create, :api]
 
   def index
     @article_comments = ArticleComment.new
   end
 
   def index10
-    @comments = comments.order("created_at DESC").limit(10).reverse
+    @comments = @comments.order("created_at DESC").limit(10).reverse
     @article_comments = ArticleComment.new
+  end
+
+  def show
+    @comment = ArticleComment.find(params[:id])
+    @article_comments = ArticleComment.new
+
   end
 
   def create
     posted_comment = ArticleComment.create(comments_params)
-    #updatedText = posted_comment.text.gsub(/>>\d+\n/,"")
-    #posted_comment.update(text: updatedText)
     length = ArticleComment.where(article_id: @article_id).length
     posted_comment.update(index: length.to_i)
-    id = posted_comment.id
+    parent_id = posted_comment.id
     anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq
-    if anchors1.present?
+    if anchors1[0].present?
       anchors1.each do |a|
-        ArticleCommentReply.create(parent_article_comment_id: id,
-                                   children_article_comment_id: a)
+        children = ArticleComment.find_by(article_id: @article_id, index: a)
+        children_id = children.id
+        ArticleCommentReply.create(parent_article_comment_id: parent_id,
+                                   children_article_comment_id: children_id)
       end
     end
 
@@ -63,8 +70,11 @@ class ArticleCommentsController < ApplicationController
     @last_comment_id = params[:last_comment_id]
   end
 
-  def find_articles_and_comments
+  def find_comments
     @comments = ArticleComment.includes(:article, :user).where(article_id: @article_id)
+  end
+
+  def find_articles
     @article = Article.find(@article_id)
   end
   
