@@ -102,6 +102,29 @@ $(function(){
     return html;
   }
 
+  $(document).ready(function() {
+    var str;
+    $('.comment__text').each(function(i, Class) {
+      let text = $(Class).text();
+      let anchor = text.match(/>>\d+/g);
+      $.each(anchor, function(i, anchor) {
+        let index = anchor.replace('>>', '');
+        let comment = $(`.comment__index[data-index=${index}]`);
+        let comment_id = comment.parent().parent().data("comment-id");;
+        if( i === 0 ){
+          str = text.replace(`${anchor}`, function(){
+          return `<a href=/articles/1/article_comments/${comment_id}>${anchor}</a>`;
+          });
+        } else {
+          str = str.replace(`${anchor}`, function(){
+          return `<a href=/articles/1/article_comments/${comment_id}>${anchor}</a>`;
+          });
+        }
+      });
+      $(Class).html(str);
+    });
+  });
+
   function appendReply(index, data) {
     let Class = $(`.comment__reply__count[data-index=${index}]`);
     let val = Class.text();
@@ -188,7 +211,7 @@ $(function(){
       $.each(data, function(i, comment) {
         insertHTML += buildHTML(comment);
       });
-      $('.new_comment').append(insertHTML);
+      $('.new_comment:last').append(insertHTML);
       if ( insertHTML !== '') {
       }
     })

@@ -71,7 +71,7 @@
                 .comment__reply__content{data: {index: c.index}}
                   - if getReplies(id).present?
                     - getReplies(id).each do |c|
-                      .comment#reply
+                      .comment#reply{data: {comment: {id: c.id}}}
                         .comment__detail
                           .comment__index{data: {index: c.index}}
                             = link_to "#{c.index}" + ":", "#index", class: :indexLink

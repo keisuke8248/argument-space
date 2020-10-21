@@ -25,11 +25,11 @@
             .comment{data: {comment: {id: c.id}}}
               .comment__detail
                 .comment__index{data: {index: c.index}}
-                  = link_to "#{c.index}" + ":", "#index", id: :index
+                  = link_to "#{c.index}" + ":", "#index", class: :indexLink
                 = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
                 .comment__detail__date
                   = time_setting(c.created_at)
-              .comment__text
+              .comment__text{data: {comment: c.id}}
                 = c.text
               .comment__evaluation
                 .comment__evaluation__form
