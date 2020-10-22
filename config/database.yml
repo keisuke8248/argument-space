@@ -49,6 +49,6 @@ test:
 #
 production:
   <<: *default
-  database: argument-space-2_production
-  username: argument-space-2
-  password: <%= ENV['ARGUMENT-SPACE-2_DATABASE_PASSWORD'] %>
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
