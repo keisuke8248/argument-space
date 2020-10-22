@@ -37,21 +37,7 @@ class ArticleCommentsController < ApplicationController
                                                         @article_id, @last_comment_id, posted_comment.id)
     @anchors= []
     @new_comment.each do |c|
-      replies = ArticleCommentReply.where(parent_article_comment_id: c.id)
-      array = []
-      replies.each do |reply|
-        childrenId = reply.children_article_comment_id
-        children = ArticleComment.where(id: childrenId)
-        children.each do |child|
-        index = child.index
-          if index == nil
-            array.push(nil)
-          else
-            array.push(index)
-          end
-        end
-        @anchors.push(array)
-      end
+      arrayAnchors(c, @anchors)
     end
     respond_to do |format|
       format.html { redirect_to article_article_comments_path(@article_id)}
@@ -61,6 +47,10 @@ class ArticleCommentsController < ApplicationController
 
   def api
     @comments = ArticleComment.where('id > ? and article_id = ?', @last_comment_id, @article_id)
+    @anchors = []
+    @comments.each do |c|
+      arrayAnchors(c, @anchors)
+    end
   end
 
   private
@@ -81,6 +71,24 @@ class ArticleCommentsController < ApplicationController
   def comments_params
     params.require(:article_comment).permit(:text).merge(article_id: params[:article_id],
                                                                       user_id: current_user.id)
+  end
+
+  def arrayAnchors(c, anchors)
+    replies = ArticleCommentReply.where(parent_article_comment_id: c.id)
+    array = []
+    replies.each do |reply|
+      childrenId = reply.children_article_comment_id
+      children = ArticleComment.where(id: childrenId)
+      children.each do |child|
+      index = child.index
+        if index == nil
+          array.push(nil)
+        else
+          array.push(index)
+        end
+      end
+      anchors.push(array)
+    end
   end
 
 end

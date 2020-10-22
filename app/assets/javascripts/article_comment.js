@@ -101,10 +101,10 @@ $(function(){
                 </div>`
     return html;
   }
-
-  $(document).ready(function() {
-    var str;
-    $('.comment__text').each(function(i, Class) {
+  
+  function addLinkToIndex(e) {
+      var str;
+      $(e).each(function(i, Class) {
       let text = $(Class).text();
       let anchor = text.match(/>>\d+/g);
       $.each(anchor, function(i, anchor) {
@@ -123,6 +123,10 @@ $(function(){
       });
       $(Class).html(str);
     });
+  };
+
+  $(document).ready(function() {
+    addLinkToIndex('.comment__text');
   });
 
   function appendReply(index, data) {
@@ -132,7 +136,7 @@ $(function(){
     Class.text(val);
     let reply = $(`.comment__reply__content[data-index=${index}]`);
     reply.append(buildREPLY(data));
-  }
+  };
 
   $(document).on('click', "a[href^='#index']", function(){
     let textarea = $('.text_area')
@@ -162,7 +166,7 @@ $(function(){
       contentType: false
     })
     .done(function(data){
-      let anchors = data.anchors
+      let anchors = data.anchors;
       if ($.isArray(data.comment)) {
         var insertHTML = '';
         $.each(data.comment, function(i, c) {
@@ -181,13 +185,14 @@ $(function(){
             appendReply(e.anchor, data.comment);
           });
         })
-
       }
       
-      var comment = $('.new_comment:last');
+      let comment = $('.new_comment:last');
       comment.append(insertHTML);
+      let commentText = comment.find('.comment__text');
+      addLinkToIndex(commentText);
       comment.hide();
-      comment.fadeIn(200)
+      comment.fadeIn(200);
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
     })
@@ -207,13 +212,27 @@ $(function(){
       data: {last_comment_id: last_comment_id}
     })
     .done(function(data) {
-      let insertHTML = '';
-      $.each(data, function(i, comment) {
+      var insertHTML = '';
+      $.each(data.comment, function(i, comment) {
         insertHTML += buildHTML(comment);
+      })
+
+      let comment = $('.new_comment:last');
+      comment.append(insertHTML);
+
+      let anchors = data.anchors;
+      $.each(data.comment, function(i, comment) {
+        $.each(anchors[i].anchor, function(i, e) {
+          $(document).ready(function() {
+            appendReply(e, comment);
+          });
+        })
       });
-      $('.new_comment:last').append(insertHTML);
-      if ( insertHTML !== '') {
-      }
+
+      let commentText = comment.find('.comment__text');
+      addLinkToIndex(commentText);
+      comment.hide();
+      comment.fadeIn(200);
     })
     .fail(function() {
       alert('error');
@@ -221,7 +240,7 @@ $(function(){
   };
   
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
-    //setInterval(reloadComments, 7000);
+    setInterval(reloadComments, 7000);
   }
 
 
