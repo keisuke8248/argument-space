@@ -9,7 +9,7 @@ $(function(){
                           ${comment.index}:
                           </a>
                         </div>
-                        <a class="comment__detail__nickname" href="user/${comment.user_id}">
+                        <a class="comment__detail__nickname" href="/users/${comment.user_id}">
                           ${comment.nickname}
                         </a>
                         <div class="comment__detail__date">
@@ -64,7 +64,7 @@ $(function(){
                      ${comment.index}:
                      </a>
                    </div>
-                   <a class="comment__detail__nickname" href="user/${comment.user_id}">
+                   <a class="comment__detail__nickname" href="/users/${comment.user_id}">
                      ${comment.nickname}
                    </a>
                    <div class="comment__detail__date">
