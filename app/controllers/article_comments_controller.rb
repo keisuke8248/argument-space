@@ -1,7 +1,7 @@
 class ArticleCommentsController < ApplicationController
   before_action :set_params
   before_action :find_comments, only: [:index, :index10]
-  before_action :find_articles, except: [:api]
+  before_action :find_articles, except: [:create, :api]
 
   def index
     @article_comments = ArticleComment.new
