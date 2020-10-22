@@ -4,10 +4,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  has_many :comments
   has_many :article_comments
-  has_many :groups
-  has_many :favorites
   has_many :evaluations
 
   validates :nickname, presence: true, length: {maximum: 8}
