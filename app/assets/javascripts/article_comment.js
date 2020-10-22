@@ -1,5 +1,7 @@
 $(function(){
 
+
+
   function buildHTML(comment){
 
       let html = `<div class="comment" data-comment-id=${comment.id}>
@@ -241,6 +243,11 @@ $(function(){
   
   if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
     setInterval(reloadComments, 7000);
+    var flg_load = window.performance.navigation.type;
+    $(window).on('pageshow', function(){
+      if( flg_load == 2 ) location.reload();
+      flg_load = 2;
+    });
   }
 
 
