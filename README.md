@@ -1,4 +1,5 @@
 # Argument_space DB設計
+
 ## usersテーブル
 |Column|Type|Options|
 |------|----|-------|
@@ -7,45 +8,54 @@
 |email|string|null: false|
 
 ### Association
-- has_many :scores
-- has_many :comments
+- has_many :article_comments
+- has_many :evaluations
 
-## groupテーブル
-|Column|Type|Options|
-|------|----|-------|
-|title|string||
-
-### Association
-- has_many :comments
-- has_many :images
-- has_one :score
-
-## commentsテーブル
-|Column|Type|Options|
-|------|----|-------|
-|text|text||
-|user_id|integer|null: false, foreign_key: true|
-|group_id|integer|null: false, foreing_key: true|
+## articlesテーブル
+|Column     |Type|Options    |
+|-----------|----|-----------|
+|title      |text|null: false|
+|url        |text|null: false|
+|description|text|           |
+|author     |text|           |
+|publidhedAt|text|           |
+|urlToImage |text|           |
 
 ### Association
+- has_many :article_comments
+
+## article_commentsテーブル
+|Column |Type      |Options          |
+|-------|----------|-----------------|
+|text   |string    |null: false      |
+|index  |integer   |                 |
+|article|references|foreign_key: true|
+|user   |references|foreign_key: true|
+
+### Association
+- belongs_to :article
 - belongs_to :user
-- belongs_to :group
-- has_many :images
+- has_many :evaluations
+- has_many :article_comment_replies
 
-## imagesテーブル
+## evaluationsテーブル
 |Column|Type|Options|
 |------|----|-------|
-|image|string||
-|comment_id|integer||
-|group_id|integer|
+|good|integer|null: false, default: 0|
+|bad|integer|null: false, default: 0|
+|article_comment|references|foreign_key: true|
+|user|references|foreign_key: true|
+|children_user|references|foreign_key: {to_table: :users}|
 
 ### Association
-- belongs_to :comment
-- belongs_to :group
+- belongs_to :article_comment
+- belongs_to :user
 
-## scoresテーブル
+## article_comment_repliesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|victory|integer||
-|group_id|integer|null: false, foreign_key: true|
-|user_id|integer|null: false, foreign_key: true|
+|parent_article_comment|references|foreign_key: {to_table: :article_comments}|
+|children_article_comment|references|foreign_key: {to_table: :article_comments}|
+
+### Association
+- belongs_to: article_comment
