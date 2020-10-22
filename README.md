@@ -29,8 +29,8 @@
 |-------|----------|-----------------|
 |text   |string    |null: false      |
 |index  |integer   |                 |
-|article|references|foreign_key: true|
-|user   |references|foreign_key: true|
+|article_id|references|foreign_key: true|
+|user_id   |references|foreign_key: true|
 
 ### Association
 - belongs_to :article
@@ -43,9 +43,9 @@
 |------|----|-------|
 |good|integer|null: false, default: 0|
 |bad|integer|null: false, default: 0|
-|article_comment|references|foreign_key: true|
-|user|references|foreign_key: true|
-|children_user|references|foreign_key: {to_table: :users}|
+|article_comment_id|references|foreign_key: true|
+|user_id|references|foreign_key: true|
+|children_user_id|references|foreign_key: {to_table: :users}|
 
 ### Association
 - belongs_to :article_comment
@@ -54,8 +54,8 @@
 ## article_comment_repliesテーブル
 |Column|Type|Options|
 |------|----|-------|
-|parent_article_comment|references|foreign_key: {to_table: :article_comments}|
-|children_article_comment|references|foreign_key: {to_table: :article_comments}|
+|parent_article_comment_id|references|foreign_key: {to_table: :article_comments}|
+|children_article_comment_id|references|foreign_key: {to_table: :article_comments}|
 
 ### Association
 - belongs_to: article_comment
