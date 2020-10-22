@@ -43,16 +43,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "comments", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "text", null: false
-    t.bigint "group_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_comments_on_group_id"
-    t.index ["user_id"], name: "index_comments_on_user_id"
-  end
-
   create_table "evaluations", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
     t.integer "good", default: 0, null: false
     t.integer "bad", default: 0, null: false
@@ -64,33 +54,6 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
     t.index ["article_comment_id"], name: "index_evaluations_on_article_comment_id"
     t.index ["children_user_id"], name: "index_evaluations_on_children_user_id"
     t.index ["user_id"], name: "index_evaluations_on_user_id"
-  end
-
-  create_table "favorites", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.integer "vote", default: 1, null: false, unsigned: true
-    t.bigint "comment_id"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["comment_id"], name: "index_favorites_on_comment_id"
-    t.index ["user_id"], name: "index_favorites_on_user_id"
-  end
-
-  create_table "group_images", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "src"
-    t.bigint "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["group_id"], name: "index_group_images_on_group_id"
-  end
-
-  create_table "groups", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
-    t.string "title", null: false
-    t.string "text"
-    t.bigint "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_groups_on_user_id"
   end
 
   create_table "users", options: "ENGINE=InnoDB DEFAULT CHARSET=utf8", force: :cascade do |t|
@@ -110,13 +73,7 @@ ActiveRecord::Schema.define(version: 2020_10_13_183824) do
   add_foreign_key "article_comment_replies", "article_comments", column: "parent_article_comment_id"
   add_foreign_key "article_comments", "articles"
   add_foreign_key "article_comments", "users"
-  add_foreign_key "comments", "groups"
-  add_foreign_key "comments", "users"
   add_foreign_key "evaluations", "article_comments"
   add_foreign_key "evaluations", "users"
   add_foreign_key "evaluations", "users", column: "children_user_id"
-  add_foreign_key "favorites", "comments"
-  add_foreign_key "favorites", "users"
-  add_foreign_key "group_images", "groups"
-  add_foreign_key "groups", "users"
 end
