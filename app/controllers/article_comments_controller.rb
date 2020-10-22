@@ -46,7 +46,12 @@ class ArticleCommentsController < ApplicationController
   end
 
   def api
-    @comments = ArticleComment.where('id > ? and article_id = ?', @last_comment_id, @article_id)
+
+    if @last_comment_id == nil
+      @comments = ArticleComment.where(article_id: @article_id)
+    else
+      @comments = ArticleComment.where('id > ? and article_id = ?', @last_comment_id, @article_id)
+    end
     @anchors = []
     @comments.each do |c|
       arrayAnchors(c, @anchors)
