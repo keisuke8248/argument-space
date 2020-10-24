@@ -1,4 +1,4 @@
-$border_color: solid black 1px;
+$border_color: 1px solid #e1e1e1;
 
 img#article {
   max-width: 100px;
@@ -17,12 +17,12 @@ img#article {
   margin: 10px 10px;
 }
 
-a.article {
+.article {
   &__header {
     display: flex;
     &__title {
       font-size: 20px;
-      text-align: center;
+      text-align: left;
       vertical-align: middle;
       margin-left: 50px;
     }
@@ -130,4 +130,27 @@ a.article {
   font-size: 6px;
 }
 
+.alertReplies {
+  display: none;
+  position: fixed;
+  top: 10px;
+  width:150px;
+  height: 60px;
+  left:calc(50% - 150px/2);
+  background-color: aqua;
+  border-radius: 30px;
+  line-height: 60px;
+  margin-left: auto;
+  margin-right: auto;
+  &__content {
+    display: flex;
+    justify-content: center;
+    &__count {
+      font-weight: bold;
+    }
+  }
+}
 
+.showAction {
+  border-top: $border_color;
+}

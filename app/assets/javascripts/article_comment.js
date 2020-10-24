@@ -112,11 +112,15 @@ $(function(){
       $.each(anchor, function(i, anchor) {
         let index = anchor.replace('>>', '');
         let comment = $(`.comment__index[data-index=${index}]`);
-        let comment_id = comment.parent().parent().data("comment-id");;
-        if( i === 0 ){
+        let comment_id = comment.parent().parent().data("comment-id");
+        if (comment_id === undefined) {
           str = text.replace(`${anchor}`, function(){
-          return `<a href=/articles/1/article_comments/${comment_id}>${anchor}</a>`;
-          });
+            return `<a href=/articles/1/article_comments/#>${anchor}</a>`;
+            });
+        } else if( i === 0 ){
+          str = text.replace(`${anchor}`, function(){
+            return `<a href=/articles/1/article_comments/${comment_id}>${anchor}</a>`;
+            });
         } else {
           str = str.replace(`${anchor}`, function(){
           return `<a href=/articles/1/article_comments/${comment_id}>${anchor}</a>`;
@@ -132,10 +136,11 @@ $(function(){
   });
 
   function appendReply(index, data) {
-    let Class = $(`.comment__reply__count[data-index=${index}]`);
-    let val = Class.text();
+    let obj = $(`.comment__reply__count[data-index=${index}]`);
+    let val = obj.text();
     val++;
-    Class.text(val);
+    obj.text(val);
+    obj.parent().css('opacity', '.2').animate({'opacity': '1'}, 'slow');
     let reply = $(`.comment__reply__content[data-index=${index}]`);
     reply.append(buildREPLY(data));
   };
@@ -152,6 +157,22 @@ $(function(){
     return false;
 
   });
+
+  function hideObj(obj) {
+    setTimeout(function(){
+      obj.fadeOut(1000);
+    }, 4000);
+  }
+
+  function alertReplies(data) {
+    if (!(data === 0 || data === null)) {
+      let obj1 = $('.alertReplies');
+      let obj2 = $('.alertReplies__content__count');
+      obj2.html(data);
+      obj1.fadeIn(100, hideObj(obj1));
+    }
+  };
+
   
   $('#new_article_comment').on('submit', function(e){
     e.preventDefault();
@@ -169,9 +190,11 @@ $(function(){
     })
     .done(function(data){
       let anchors = data.anchors;
+      debugger;
       if ($.isArray(data.comment)) {
         var insertHTML = '';
         $.each(data.comment, function(i, c) {
+          debugger;
           insertHTML += buildHTML(c);
           $.each(anchors[i].anchor, function(i, anchor) {
             $(document).ready(function() {
@@ -197,6 +220,7 @@ $(function(){
       comment.fadeIn(200);
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
+      alertReplies(data.reply.reply);
     })
     .fail(function(){
       alert('error');
@@ -204,9 +228,10 @@ $(function(){
   })
 
 
+
   var reloadComments = function() {
-    var last_comment_id = $('.comment:last').data("comment-id");
-    var article_id = $('.article__header__title').data("article-id");
+    let last_comment_id = $('.comment:last').data("comment-id");
+    let article_id = $('.article__header__title').data("article-id");
     $.ajax({
       url: "/articles/" + article_id + "/article_comments/api",
       type: 'get',
@@ -235,13 +260,18 @@ $(function(){
       addLinkToIndex(commentText);
       comment.hide();
       comment.fadeIn(200);
+
+      alertReplies(data.reply.reply);
     })
     .fail(function() {
       alert('error');
     });
   };
   
-  if (document.location.href.match(/\/articles\/\d+\/article_comments/)) {
+  if (document.location.href.match(
+    /\/articles\/\d+\/article_comments(?!\/\d+)/ 
+    || /\/articles\/\d+\/article_comments\/index10/)
+    ) {
     setInterval(reloadComments, 7000);
     var flg_load = window.performance.navigation.type;
     $(window).on('pageshow', function(){

@@ -32,7 +32,6 @@ class ArticleCommentsController < ApplicationController
                                    children_article_comment_id: children_id)
       end
     end
-
     @new_comment = ArticleComment.includes(:user).where('article_id = ? and id > ? and id <= ?', 
                                                         @article_id, @last_comment_id, posted_comment.id)
     @anchors= []
@@ -81,10 +80,14 @@ class ArticleCommentsController < ApplicationController
   def arrayAnchors(c, anchors)
     replies = ArticleCommentReply.where(parent_article_comment_id: c.id)
     array = []
+    @repliesToCurrentUser = 0
     replies.each do |reply|
       childrenId = reply.children_article_comment_id
       children = ArticleComment.where(id: childrenId)
       children.each do |child|
+      if child.user_id == current_user.id
+        @repliesToCurrentUser += 1
+      end
       index = child.index
         if index == nil
           array.push(nil)

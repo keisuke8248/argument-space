@@ -12,3 +12,6 @@ json.anchors do
     json.anchor anchor
   end
 end
+json.reply do
+  json.reply @repliesToCurrentUser
+end

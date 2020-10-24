@@ -12,6 +12,9 @@ if @new_comment.length == 1
       json.anchor anchor
     end
   end
+  json.reply do
+    json.reply @repliesToCurrentUser
+  end
 else
   json.comment do
     json.array! @new_comment do |comment|
@@ -27,6 +30,9 @@ else
     json.array! @anchors do |anchor|
       json.anchor anchor
     end
+  end
+  json.reply do
+    json.reply @repliesToCurrentUser
   end
 end
 
