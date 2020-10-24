@@ -69,7 +69,7 @@ $(function(){
       buildHTML(data, "good", "canceling_good", "good");
     })
     .fail(function() {
-      console.log('error');
+      alert('error');
     })
   });
 
@@ -106,7 +106,7 @@ $(function(){
       buildHTML(data, "bad", "canceling_bad", "bad");
     })
     .fail(function() {
-      console.log('error');
+      alert('error');
     })
   });
 
@@ -126,7 +126,7 @@ $(function(){
       buildHTML(data, "canceling_bad", "bad", "bad");
     })
     .fail(function() {
-      console.log('error');
+      alert('error');
     })
   });
 });
