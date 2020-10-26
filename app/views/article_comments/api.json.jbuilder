@@ -15,3 +15,6 @@ end
 json.reply do
   json.reply @repliesToCurrentUser
 end
+json.userDistinction do
+  json.key @userDistinction
+end

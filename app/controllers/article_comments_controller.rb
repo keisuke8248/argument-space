@@ -1,5 +1,6 @@
 class ArticleCommentsController < ApplicationController
   before_action :set_params
+  before_action :set_anchors, only: [:create, :api]
   before_action :find_comments, only: [:index, :index10]
   before_action :find_articles, except: [:create, :api]
 
@@ -34,9 +35,10 @@ class ArticleCommentsController < ApplicationController
     end
     @new_comment = ArticleComment.includes(:user).where('article_id = ? and id > ? and id <= ?', 
                                                         @article_id, @last_comment_id, posted_comment.id)
-    @anchors= []
+
     @new_comment.each do |c|
       arrayAnchors(c, @anchors)
+      userDistinction(c, @userDistinction)
     end
     respond_to do |format|
       format.html { redirect_to article_article_comments_path(@article_id)}
@@ -51,9 +53,10 @@ class ArticleCommentsController < ApplicationController
     else
       @comments = ArticleComment.where('id > ? and article_id = ?', @last_comment_id, @article_id)
     end
-    @anchors = []
+
     @comments.each do |c|
       arrayAnchors(c, @anchors)
+      userDistinction(c, @userDistinction)
     end
   end
 
@@ -62,6 +65,11 @@ class ArticleCommentsController < ApplicationController
   def set_params
     @article_id = params[:article_id]
     @last_comment_id = params[:last_comment_id]
+  end
+
+  def set_anchors
+    @anchors = []
+    @userDistinction = []
   end
 
   def find_comments
@@ -96,6 +104,15 @@ class ArticleCommentsController < ApplicationController
         end
       end
       anchors.push(array)
+    end
+  end
+
+  def userDistinction(c, array)
+    case c.user_id
+    when current_user.id
+      array.push('disabled')
+    else
+      array.push(nil)
     end
   end
 

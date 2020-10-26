@@ -15,6 +15,9 @@ if @new_comment.length == 1
   json.reply do
     json.reply @repliesToCurrentUser
   end
+  json.userDistinction do
+    json.key @userDistinction
+  end
 else
   json.comment do
     json.array! @new_comment do |comment|
@@ -33,6 +36,9 @@ else
   end
   json.reply do
     json.reply @repliesToCurrentUser
+  end
+  json.userDistinction do
+    json.key @userDistinction
   end
 end
 

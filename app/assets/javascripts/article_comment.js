@@ -2,8 +2,8 @@ $(function(){
 
 
 
-  function buildHTML(comment){
-
+  function buildHTML(comment, key){
+  console.log(key)
       let html = `<div class="comment" data-comment-id=${comment.id}>
                       <div class="comment__detail">
                         <div class="comment__index" data-index="${comment.index}">
@@ -26,7 +26,7 @@ $(function(){
                           <form class="evaluation_form_good" action="/evaluations/good" accept-charset="UTF-8" method="post">
                             <input name="utf8" type="hidden" value="✓"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                            <button name="button" type="submit" class="good_btn" disabled="disabled">
+                            <button name="button" type="submit" class="good_btn" ${key}>
                               <i class="fas fa-thumbs-up">
                                 <span class="count_good">0</span>
                               </i>
@@ -37,7 +37,7 @@ $(function(){
                           <form class="evaluation_form_bad" action="/evaluations/bad" accept-charset="UTF-8" method="post">
                             <input name="utf8" type="hidden" value="✓"></input>
                             <input value=${comment.id} type="hidden" name="comment_id" id="comment_id"></input>
-                            <button name="button" type="submit" class="bad_btn" disabled="disabled">
+                            <button name="button" type="submit" class="bad_btn" ${key}>
                               <i class="fas fa-thumbs-down">
                                 <span class="count_bad">0</span>
                               </i>
@@ -190,12 +190,11 @@ $(function(){
     })
     .done(function(data){
       let anchors = data.anchors;
-      debugger;
+      let key = data.userDistinction.key
       if ($.isArray(data.comment)) {
         var insertHTML = '';
         $.each(data.comment, function(i, c) {
-          debugger;
-          insertHTML += buildHTML(c);
+          insertHTML += buildHTML(c, key);
           $.each(anchors[i].anchor, function(i, anchor) {
             $(document).ready(function() {
               appendReply(anchor, c);
@@ -204,7 +203,7 @@ $(function(){
         });
 
       } else {
-        insertHTML = buildHTML(data.comment);
+        insertHTML = buildHTML(data.comment, key);
         $.each(anchors, function(i, e) {
           $(document).ready(function() {
             appendReply(e.anchor, data.comment);
@@ -220,7 +219,8 @@ $(function(){
       comment.fadeIn(200);
       $('.text_area').val('');
       $('.submit_comment').prop('disabled', false);
-      alertReplies(data.reply.reply);
+      let reply = data.reply.reply;
+      alertReplies(reply);
     })
     .fail(function(){
       alert('error');
@@ -239,9 +239,10 @@ $(function(){
       data: {last_comment_id: last_comment_id}
     })
     .done(function(data) {
+      let key = data.userDistinction.key
       var insertHTML = '';
       $.each(data.comment, function(i, comment) {
-        insertHTML += buildHTML(comment);
+        insertHTML += buildHTML(comment, key);
       })
 
       let comment = $('.new_comment:last');
@@ -261,7 +262,8 @@ $(function(){
       comment.hide();
       comment.fadeIn(200);
 
-      alertReplies(data.reply.reply);
+      let reply = data.reply.reply;
+      alertReplies(reply);
     })
     .fail(function() {
       alert('error');
