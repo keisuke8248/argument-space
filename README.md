@@ -1,3 +1,6 @@
+# Usage
+https://github.com/keisuke8248/argument-space-2/issues/1
+
 # Argument_space DB設計
 
 ## usersテーブル
