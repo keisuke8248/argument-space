@@ -2,6 +2,7 @@ json.comment do
   json.array! @comments do |comment|
     json.text comment.text
     json.id comment.id
+    json.user_id comment.user.id
     json.nickname comment.user.nickname
     json.index comment.index
     json.date time_setting(comment.created_at)
