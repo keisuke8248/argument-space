@@ -1,6 +1,5 @@
 # Usage
-![6mVppzLbYWfhQ934boSR1603734465-1603734502](https://user-images.githubusercontent.com/62201890/97208996-22a0e080-17ff-11eb-8836-6a3621113470.gif)
-
+![as１リサイズ](https://user-images.githubusercontent.com/62201890/97253997-c9fa3380-1850-11eb-94c0-b2645f51cf24.gif)
 # Argument_space DB設計
 
 ## usersテーブル
