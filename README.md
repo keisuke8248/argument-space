@@ -1,3 +1,7 @@
+# Usage
+![as１リサイズ](https://user-images.githubusercontent.com/62201890/97253997-c9fa3380-1850-11eb-94c0-b2645f51cf24.gif)
+![as解説２リサイズ](https://user-images.githubusercontent.com/62201890/97254207-3bd27d00-1851-11eb-95a8-45b094631184.gif)
+
 # Argument_space DB設計
 
 ## usersテーブル
