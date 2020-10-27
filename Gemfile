@@ -74,3 +74,4 @@ gem 'news-api'
 gem 'dotenv-rails'
 gem 'font-awesome-sass', '~> 5.4.1'
 gem 'chartkick'
+gem "actionview", ">= 5.2.4.4"
