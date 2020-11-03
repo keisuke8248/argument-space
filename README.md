@@ -1,8 +1,36 @@
-# Usage
+# Argument-space
+日々のニュースに関して議論をするためのアプリケーションです。
+文字数制限に縛られないスムーズな議論が大勢でできないか、という思いで作成しました。
+
+# URL
+https://argument-space.herokuapp.com/
+画面上部のログインボタンよりログインをしていただくとコメントを投稿できるようになります。
+
+# テストユーザー1
+メールアドレス tarou@test.com
+パスワード 11111111
+
+# テストユーザー2
+メールアドレス jirou@test.com
+パスワード 11111111
+
+# 使用技術
+* Ruby 2.5.1
+* Ruby on Rails 5.2.4.4 
+* haml&Sass
+* JavaScript
+* jQuery
+* MySQL(ローカル環境) 5.6
+* News API
+* heroku
+
+
+# コメント投稿機能
 * コメントの自動更新
 * \>>nと記載すると自動的にn番目のコメントのリンクが生成
 
 ![as１リサイズ](https://user-images.githubusercontent.com/62201890/97253997-c9fa3380-1850-11eb-94c0-b2645f51cf24.gif)
+
 
 * 自動更新の際にログイン中のユーザーへの返信が含まれる場合に返信件数を通知
 * 高評価、低評価ボタンでコメントを評価
@@ -10,7 +38,7 @@
 
 ![as解説２リサイズ](https://user-images.githubusercontent.com/62201890/97254207-3bd27d00-1851-11eb-95a8-45b094631184.gif)
 
-# Argument_space DB設計
+# DB設計
 
 ## usersテーブル
 |Column|Type|Options|
