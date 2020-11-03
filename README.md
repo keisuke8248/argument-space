@@ -1,5 +1,11 @@
 # Usage
+コメントの自動更新
+>>n と記載すると自動的にn番目のコメントのリンクが生成
 ![as１リサイズ](https://user-images.githubusercontent.com/62201890/97253997-c9fa3380-1850-11eb-94c0-b2645f51cf24.gif)
+
+自動更新の際にログイン中のユーザーへの返信が含まれる場合に返信件数を通知し
+高評価、低評価ボタンでコメントを評価
+ユーザーページにて獲得した評価をグラフ化
 ![as解説２リサイズ](https://user-images.githubusercontent.com/62201890/97254207-3bd27d00-1851-11eb-95a8-45b094631184.gif)
 
 # Argument_space DB設計
