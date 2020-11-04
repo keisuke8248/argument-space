@@ -24,7 +24,9 @@
                     %span.mainItem__left__content__comment__detail__evaluation__bad
                       = counting_evaluation(c.id, "bad")
               .mainItem__left__content__comment__text
-                = c.text
+                = link_to c.text.truncate(58), article_article_comment_path(c.article_id, c.id)
+              .mainItem__left__content__comment__articleTitle
+                = link_to articleTitle(c.article_id).truncate(20), articlePath(c.article_id)
       .mainItem__right
         .mainItem__right__count
           .mainItem__right__count__good
@@ -32,7 +34,7 @@
           .mainItem__right__count__bad
             = "低評価  " + @bad.to_s
         .mainItem__right__graph
-          = pie_chart [["低評価", @bad], ["高評価", @good]]
+          = pie_chart [["低評価", @bad], ["高評価", @good]], colors: ["#F02040", "#2040F0"]
 
 
 

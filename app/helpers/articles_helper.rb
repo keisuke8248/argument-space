@@ -22,13 +22,4 @@ module ArticlesHelper
     end
   end
 
-  def articlePath(id)
-    article = Article.find(id)
-    return article_article_comments_path(article.id)
-  end
-
-  def articleTitle(id)
-    article = Article.find(id)
-    return article.title
-  end
 end
