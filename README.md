@@ -1,6 +1,7 @@
 # Argument-space
 日々のニュースに関して議論をするためのアプリケーションです。<br>文字数制限に縛られないスムーズな議論が大勢でできないかという思いで作成しました。
 
+<img width="1363" alt="as top-page" src="https://user-images.githubusercontent.com/62201890/98080945-a1f67a00-1eb9-11eb-9a8d-914f0fe074f2.png">
 
 # URL
 https://argument-space.herokuapp.com/<br>画面上部のログインボタンよりログインをしていただくとコメントを投稿できるようになります。
