@@ -10,11 +10,18 @@ img#article {
 }
 
 .wrapper {
+  width: 100%;
   margin-bottom: 50px;
 }
 
 .showMain {
+
   margin: 10px 10px;
+}
+
+.content {
+  margin: auto;
+  width: 1000px;
 }
 
 .article {
