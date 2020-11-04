@@ -1,8 +1,19 @@
 $border: 1px solid #e1e1e1;
+$blue: #0068b7;
+$green: #0EA68B;
 
-img {
+img:not(.header__appLogo) {
   max-width: 80px;
   max-height: 80px;
+}
+
+a {
+display: block;
+}
+
+.content__main  a {
+  color: $blue;
+  font-weight: 600;
 }
 
 .categoryArray {
@@ -19,16 +30,16 @@ img {
 }
 
 .content {
-  width: 1000px;
-  margin: auto;
   &__top {
+    width: 100%;
     display: flex;
+    margin: auto;
     &__category {
       color: white;
       background-color: black;
       font-size: 20px;
       height: 42px;
-      width: calc(1000px / 6);
+      width: calc(100% / 6);
       text-align: center;
       line-height: 42px;
       border: $border;
@@ -38,6 +49,8 @@ img {
     }
   }
   &__main{
+    width: 1000px;
+    margin: auto;
     display: flex;
     margin-top: 30px;
     border-right: $border;
@@ -95,9 +108,17 @@ img {
   &__right {
     width: 405px;
     margin-left: 15px;
-    &__commentCounts {
-      text-align: right;
+    &__bottom {
+      margin-top: 15px;
+      display: flex;
+      justify-content: space-between;
       font-size: 14px;
+      &__commentCounts {
+        display: flex;
+        &__number {
+          margin-left: 4px;
+        }
+      }
     }
   }
 }

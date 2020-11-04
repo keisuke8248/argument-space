@@ -17,11 +17,13 @@
               .article__right
                 .article__right__title
                   = link_to n.title.gsub(/-.+$/, ""), n.url.to_s, target: :_blank
-                .article__right__author
-                  = n.title.match(/[^-]+$/)
-                .article__right__commentCounts
-                  = link_to "コメント", article_article_comments_path(articleID(n))
-                  = article_comment(articleID(n))
+                .article__right__bottom
+                  .article__right__bottom__author
+                    = n.title.match(/[^-]+$/)
+                  .article__right__bottom__commentCounts
+                    = link_to "コメント", article_article_comments_path(articleID(n))
+                    .article__right__bottom__commentCounts__number
+                      = article_comment(articleID(n))
         .content__main__right
           .content__main__right__header
             新着コメント
