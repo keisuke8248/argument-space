@@ -14,4 +14,15 @@ module ApplicationHelper
       return evaluation.where(good: 0, bad: 1).length
     end
   end
+
+  def articleTitle(id)
+    article = Article.find(id)
+    return article.title
+  end
+
+  def articlePath(id)
+    article = Article.find(id)
+    return article_article_comments_path(article.id)
+  end
+
 end

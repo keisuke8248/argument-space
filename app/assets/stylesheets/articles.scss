@@ -1,6 +1,4 @@
-$border: 1px solid #e1e1e1;
-$blue: #0068b7;
-$green: #0EA68B;
+@import "color_font";
 
 img:not(.header__appLogo) {
   max-width: 80px;
@@ -8,7 +6,7 @@ img:not(.header__appLogo) {
 }
 
 a {
-display: block;
+  display: block;
 }
 
 .content__main  a {
@@ -42,7 +40,7 @@ display: block;
       width: calc(100% / 6);
       text-align: center;
       line-height: 42px;
-      border: $border;
+      border: $border-color;
       &:hover {
         background-color: rgb(94, 94, 94);
       }
@@ -53,16 +51,16 @@ display: block;
     margin: auto;
     display: flex;
     margin-top: 30px;
-    border-right: $border;
-    border-left: $border;
-    border-bottom: $border;
+    border-right: $border-color;
+    border-left: $border-color;
+    border-bottom: $border-color;
     &:not(:first-child) {
-      border: $border;
+      border: $border-color;
     }
 
     &__left{
       width: 600px;
-      border-right: $border;
+      border-right: $border-color;
     }
     &__right {
       width: 400px;
@@ -70,7 +68,7 @@ display: block;
         text-align: center;
         line-height: 38px;
         font-size: 20px;
-        border-bottom: $border;
+        border-bottom: $border-color;
       }
     }
   }
@@ -82,7 +80,7 @@ display: block;
 .articleComment {
   padding: 8px 0;
   &:not(:first-child) {
-    border-top: $border;
+    border-top: $border-color;
   }
   &__text {
     font-size: 12px;
@@ -98,7 +96,7 @@ display: block;
   padding: 10px 0 10px 0;
   display: flex;
   &:not(:first-child){
-    border-top: $border;
+    border-top: $border-color;
   }
   &__left {
     padding: auto;

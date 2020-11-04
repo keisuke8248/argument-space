@@ -1,5 +1,4 @@
-$border_color: 1px solid #e1e1e1;
-$blue: #0068b7;
+@import "color_font";
 
 img#article {
   max-width: 100px;
@@ -99,7 +98,7 @@ img#article {
       display: flex;
       font-size: 11px;
       border: $border_color;
-      background-color: pink;
+      background-color: #f0f080;
     }
   }
   .text_area {
