@@ -117,10 +117,10 @@
                                   %span.count_bad
                                     = counting_evaluation(c.id, "bad")
         .new_comment
-    .showAction
-    = link_to "全部", article_article_comments_path(@article.id), id: :showAction
-    = link_to "最新10", index10_article_article_comments_path(@article.id)
-    = link_to "上", "#page-top"
+      .showAction
+      = link_to "全部", article_article_comments_path(@article.id), id: :showAction
+      = link_to "最新10", index10_article_article_comments_path(@article.id)
+      = link_to "上", "#page-top"
     .alertReplies
       .alertReplies__content
         .alertReplies__content__count

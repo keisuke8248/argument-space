@@ -1,4 +1,5 @@
 $border_color: 1px solid #e1e1e1;
+$blue: #0068b7;
 
 img#article {
   max-width: 100px;
@@ -10,11 +11,17 @@ img#article {
 }
 
 .wrapper {
+  width: 100%;
   margin-bottom: 50px;
 }
 
 .showMain {
   margin: 10px 10px;
+}
+
+.content {
+  margin: auto;
+  width: 1000px;
 }
 
 .article {
@@ -25,6 +32,10 @@ img#article {
       text-align: left;
       vertical-align: middle;
       margin-left: 50px;
+      & a {
+        color: $blue;
+        font-weight: 600;
+      }
     }
   }
   
@@ -58,6 +69,10 @@ img#article {
     &__date {
       margin-left: 5px;
     }
+  }
+  &__text a {
+    color: $blue;
+    
   }
   &__evaluation {
     display: flex;

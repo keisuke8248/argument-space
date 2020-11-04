@@ -120,9 +120,9 @@
       = form_with model:[@article, @article_comments], local: true, class: "comment__form", id: "new_article_comment" do |f|
         = f.text_area :text, placeholder: "コメントを入力してください", class: "text_area", cols: "60", rows: "8", maxlength: "500", disabled: !(user_signed_in?)
         = f.submit "投稿する", class: "submit_comment", disabled: !(user_signed_in?)
-    = link_to "全部", article_article_comments_path(@article.id)
-    = link_to "最新10", index10_article_article_comments_path(@article.id)
-    = link_to "上", "#page-top"
+      = link_to "全部", article_article_comments_path(@article.id)
+      = link_to "最新10", index10_article_article_comments_path(@article.id)
+      = link_to "上", "#page-top"
     .alertReplies
       .alertReplies__content
         .alertReplies__content__count
