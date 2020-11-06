@@ -12,6 +12,7 @@ module ArgumentSpace2
     config.load_defaults 5.2
     config.time_zone = 'Tokyo'
     config.i18n.default_locale = :ja
+    config.action_view.field_error_proc = Proc.new { |html_tag, instance| html_tag }
 
 
     # Settings in config/environments/* take precedence over those specified here.
