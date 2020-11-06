@@ -50,7 +50,7 @@ img#article {
 }
 
 .comments {
-  border-top: $border_color;
+  border-top: $border-color;
   padding-bottom: 20px;
 }
 
@@ -81,7 +81,7 @@ img#article {
   }
   &__form {
     padding-top: 20px;
-    border-top: $border_color;
+    border-top: $border-color;
   }
   &__reply {
     &__text {
@@ -97,7 +97,7 @@ img#article {
       border-radius: 8px;
       display: flex;
       font-size: 11px;
-      border: $border_color;
+      border: $border-color;
       background-color: #f0f080;
     }
   }
@@ -166,5 +166,5 @@ img#article {
 }
 
 .showAction {
-  border-top: $border_color;
+  border-top: $border-color;
 }

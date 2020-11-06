@@ -34,7 +34,7 @@ a {
     margin: auto;
     &__category {
       color: white;
-      background-color: black;
+      background-color: $main-black;
       font-size: 20px;
       height: 42px;
       width: calc(100% / 6);

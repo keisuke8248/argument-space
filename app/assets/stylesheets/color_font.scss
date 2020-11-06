@@ -1,2 +1,8 @@
-$border_color: 1px solid #e1e1e1;
+$border-color: 1px solid #e1e1e1;
 $blue: #0068b7;
+$main-black: #333333;
+
+@mixin form-font {
+  border-radius: 5px;
+  border:  1px solid #e1e1e1;
+}

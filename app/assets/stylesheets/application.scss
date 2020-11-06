@@ -15,15 +15,17 @@
 
 @import 'font-awesome-sprockets';
 @import 'font-awesome';
+@import 'color_font';
 
 body {
   background-image: image-url('greyzz_@2X.png');
+  color: $main-black;
 }
 
 
 a {
   text-decoration: none;
-  color: black;
+  color: $main-black;
 }
 
 a:hover {
@@ -36,9 +38,13 @@ a:hover {
 }
 
 .header {
+  min-width: 560px;
   display: flex;
   justify-content: space-between;
   height: 100px;
+  & #devise {
+    margin: 0 0 0 auto;
+  }
   &__appLogo {
     max-width: 250px;
     position: left;
@@ -51,6 +57,7 @@ a:hover {
   position: relative;
   display: inline-block;
   text-decoration: none;
+
   &::after {
     position: absolute;
     bottom: -4px;

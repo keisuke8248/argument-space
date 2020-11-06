@@ -1,0 +1,46 @@
+@import "color_font";
+
+.warpper {
+  width: 100%;
+}
+
+.showMain {
+  width: 400px;
+  margin: auto;
+    &__logo {
+      min-width: 300px;
+      text-align: center;
+      border-bottom: $border-color;
+    }
+}
+
+.form-control {
+  width: 400px;
+  height: 40px;
+  box-sizing: border-box;
+  @include form-font;
+}
+
+.field {
+  margin-top: 20px;
+}
+
+.submit-btn {
+  width: 400px;
+  height: 50px;
+  font-size: 16px;
+  background: #f1e767;
+  margin-top: 20px;
+  background: -webkit-gradient(linear, left top, left bottom, from(#fdfbfb), to(#ebedee));
+  background: -webkit-linear-gradient(top, #fdfbfb 0%, #ebedee 100%);
+  background: linear-gradient(to bottom, #fdfbfb 0%, #b1f1ce 100%);
+  -webkit-box-shadow: inset 1px 1px 1px #fff;
+  box-shadow: inset 1px 1px 1px #fff;
+  @include form-font;
+  &:hover {
+    cursor: pointer;
+    background: -webkit-gradient(linear, left bottom, left top, from(#fdfbfb), to(#ebedee));
+    background: -webkit-linear-gradient(bottom, #fdfbfb 0%, #ebedee 100%);
+    background: linear-gradient(to top, #fdfbfb 0%, #ebedee 100%);
+  }
+}
