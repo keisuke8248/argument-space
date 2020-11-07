@@ -31,7 +31,7 @@
               .comment__detail__date
                 = time_setting(c.created_at)
             .comment__text{data: {comment: id}}
-              = c.text
+              = safe_join(c.text.split("\n"), tag(:br))
             .comment__evaluation
               .comment__evaluation__form
                 - if myEvaluation != "good"
@@ -80,7 +80,7 @@
                         .comment__detail__date
                           = time_setting(c.created_at)
                       .comment__text
-                        = c.text
+                        = safe_join(c.text.split("\n"), tag(:br))
                       .comment__evaluation
                         .comment__evaluation__form
                           - if myEvaluation != "good"
