@@ -1,7 +1,5 @@
 $(function(){
 
-
-
   function buildHTML(comment, key){
   console.log(key)
       let html = `<div class="comment" data-comment-id=${comment.id}>
@@ -18,7 +16,7 @@ $(function(){
                           ${comment.date}
                         </div>
                       </div>
-                      <div class="comment__text">
+                      <div class="comment__text reply">
                         ${comment.text}
                       </div>
                       <div class="comment__evaluation">
@@ -105,9 +103,9 @@ $(function(){
   }
   
   function addLinkToIndex(e) {
-      var str;
-      $(e).each(function(i, Class) {
-      let text = $(Class).text();
+    var str;
+    e.each(function(i, obj) {
+      let text = $(obj).text();
       let anchor = text.match(/>>\d+/g);
       $.each(anchor, function(i, anchor) {
         let index = anchor.replace('>>', '');
@@ -127,13 +125,11 @@ $(function(){
           });
         }
       });
-      $(Class).html(str);
+      $(obj).html(str);
     });
   };
 
-  $(document).ready(function() {
-    addLinkToIndex('.comment__text');
-  });
+  addLinkToIndex($('.comment__text').not('.reply'));
 
   function appendReply(index, data) {
     let obj = $(`.comment__reply__count[data-index=${index}]`);
@@ -227,8 +223,6 @@ $(function(){
     })
   })
 
-
-
   var reloadComments = function() {
     let last_comment_id = $('.comment:last').data("comment-id");
     let article_id = $('.article__header__title').data("article-id");
@@ -281,7 +275,6 @@ $(function(){
       flg_load = 2;
     });
   }
-
 
   $(document).on('click','.comment__reply#hide', function() {
     var reply = $(this).find('.comment__reply__content');
