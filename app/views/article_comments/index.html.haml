@@ -78,7 +78,7 @@
                           = link_to c.user.nickname, user_path(c.user.id), class: "comment__detail__nickname"
                           .comment__detail__date
                             = time_setting(c.created_at)
-                        .comment__text.reply
+                        .comment__text
                           = c.text
                         .comment__evaluation
                           .comment__evaluation__form

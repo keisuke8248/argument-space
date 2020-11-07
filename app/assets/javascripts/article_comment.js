@@ -1,7 +1,5 @@
 $(function(){
-
   function buildHTML(comment, key){
-  console.log(key)
       let html = `<div class="comment" data-comment-id=${comment.id}>
                       <div class="comment__detail">
                         <div class="comment__index" data-index="${comment.index}">
@@ -125,11 +123,13 @@ $(function(){
           });
         }
       });
-      $(obj).html(str);
+      if (anchor !== null) {
+        $(obj).html(str);
+      }
     });
   };
 
-  addLinkToIndex($('.comment__text').not('.reply'));
+  addLinkToIndex($('.comment__text'));
 
   function appendReply(index, data) {
     let obj = $(`.comment__reply__count[data-index=${index}]`);
