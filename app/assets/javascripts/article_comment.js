@@ -1,5 +1,7 @@
 $(function(){
   function buildHTML(comment, key){
+      var text = comment.text.replace(/\n|\r\n|\r/g, '<br>');
+
       let html = `<div class="comment" data-comment-id=${comment.id}>
                       <div class="comment__detail">
                         <div class="comment__index" data-index="${comment.index}">
@@ -15,7 +17,7 @@ $(function(){
                         </div>
                       </div>
                       <div class="comment__text reply">
-                        ${comment.text}
+                        ${text}
                       </div>
                       <div class="comment__evaluation">
                         <div class="comment__evaluation__form">
@@ -54,6 +56,7 @@ $(function(){
   }
 
   function buildREPLY(comment) {
+    var text = comment.text.replace(/\n|\r\n|\r/g, '<br>');
 
     let html = `<div class="comment" id="reply" data-comment-id=${comment.id}>
                  <div class="comment__detail">
@@ -70,7 +73,7 @@ $(function(){
                    </div>
                  </div>
                  <div class="comment__text">
-                   ${comment.text}
+                   ${text}
                  </div>
                  <div class="comment__evaluation">
                    <div class="comment__evaluation__form">
