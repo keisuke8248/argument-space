@@ -8,27 +8,6 @@
 - yahooニュースでは返信コメントが埋もれてしまいやすく、ニュースに対する個人の意見を書く事で終わる傾向がある<br>
 以上の特性を理解した上で、意見を簡略化せず、ユーザー同士の意見交換に特化した掲示板が作る事ができたらという思いから本アプリを作成しました。
 
-# 作成していて苦労した点
-「>>n」というアンカーを書き込んで投稿すると、それを「当記事のn番目のコメントの返信」として表示させるという実装に苦労をしました。<br>
-これを実現するために, 「>>n」というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装しました。
-そうする事で コメント = n番目のコメントへの返信 というように関連づける事ができました。
-
-```
-posted_comment = ArticleComment.create(comments_params)
-    length = ArticleComment.where(article_id: @article_id).length //登録されたコメントが記事に対する何番目のコメントなのか（インデックス）を変数に登録
-    posted_comment.update(index: length.to_i) //インデックスを登録
-    parent_id = posted_comment.id
-    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq //アンカーを検出
-    if anchors1[0].present?
-      anchors1.each do |a|
-        children = ArticleComment.find_by(article_id: params[:article_id], index: a)
-        children_id = children.id
-        ArticleCommentReply.create(parent_article_comment_id: parent_id,
-                                   children_article_comment_id: children_id) //コメント先、投稿コメントのidをArticleCommentReplyテーブルに登録
-      end
-    end
-```
-
 # URL
 https://argument-space.herokuapp.com/<br>画面上部のログインボタンよりログインをしていただくとコメントを投稿できるようになります。
 
@@ -61,6 +40,26 @@ https://argument-space.herokuapp.com/<br>画面上部のログインボタンよ
 * ユーザーページにて獲得した評価をグラフ化
 
 ![as解説２リサイズ](https://user-images.githubusercontent.com/62201890/97254207-3bd27d00-1851-11eb-95a8-45b094631184.gif)
+
+# 作成していて苦労した点
+「>>n」というアンカーを書き込んで投稿すると、それを「当記事のn番目のコメントの返信」として表示させるという実装に苦労をしました。<br>
+これを実現するために, 「>>n」というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装をする事で コメント = n番目のコメントへの返信 というように関連づける事ができました。
+
+```
+posted_comment = ArticleComment.create(comments_params)
+    length = ArticleComment.where(article_id: @article_id).length //登録されたコメントが記事に対する何番目のコメントなのか（インデックス）を変数に登録
+    posted_comment.update(index: length.to_i) //インデックスを登録
+    parent_id = posted_comment.id
+    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq //アンカーを検出
+    if anchors1[0].present?
+      anchors1.each do |a|
+        children = ArticleComment.find_by(article_id: params[:article_id], index: a)
+        children_id = children.id
+        ArticleCommentReply.create(parent_article_comment_id: parent_id,
+                                   children_article_comment_id: children_id) //コメント先、投稿コメントのidをArticleCommentReplyテーブルに登録
+      end
+    end
+```
 
 # DB設計
 
