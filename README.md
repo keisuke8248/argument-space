@@ -60,6 +60,9 @@ posted_comment = ArticleComment.create(comments_params)
     end
 ```
 
+# 今後の実装
+レスポンシブル対応の実装によりスマートフォンでも快適に利用できるように改善する予定です。
+
 # DB設計
 
 ## usersテーブル
