@@ -12,7 +12,8 @@
 「>>n」というアンカーを書き込んで投稿すると、それを「当記事のn番目のコメントの返信」として表示させるという実装に苦労をしました。<br>
 これを実現するために, 「>>n」というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装しました。
 そうする事で コメント = n番目のコメントへの返信 というように関連づける事ができました。
-`posted_comment = ArticleComment.create(comments_params)
+
+```posted_comment = ArticleComment.create(comments_params)
     length = ArticleComment.where(article_id: @article_id).length
     posted_comment.update(index: length.to_i)
     parent_id = posted_comment.id
@@ -24,7 +25,8 @@
         ArticleCommentReply.create(parent_article_comment_id: parent_id,
                                    children_article_comment_id: children_id)
       end
-    end`
+    end
+```
 
 # URL
 https://argument-space.herokuapp.com/<br>画面上部のログインボタンよりログインをしていただくとコメントを投稿できるようになります。
