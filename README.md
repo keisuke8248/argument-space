@@ -9,9 +9,22 @@
 以上の特性を理解した上で、意見を簡略化せず、ユーザー同士の意見交換に特化した掲示板が作る事ができたらという思いから本アプリを作成しました。
 
 # 作成していて苦労した点
-\>>n というようにコメントにアンカーを書き込んで投稿すると、それをn番目のコメントの返信として表示させるという実装に苦労をしました。
-これらは>>n というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装しました。
+「>>n」というアンカーを書き込んで投稿すると、それを「当記事のn番目のコメントの返信」として表示させるという実装に苦労をしました。<br>
+これを実現するために, 「>>n」というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装しました。
 そうする事で コメント = n番目のコメントへの返信 というように関連づける事ができました。
+`posted_comment = ArticleComment.create(comments_params)
+    length = ArticleComment.where(article_id: @article_id).length
+    posted_comment.update(index: length.to_i)
+    parent_id = posted_comment.id
+    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq
+    if anchors1[0].present?
+      anchors1.each do |a|
+        children = ArticleComment.find_by(article_id: @article_id, index: a)
+        children_id = children.id
+        ArticleCommentReply.create(parent_article_comment_id: parent_id,
+                                   children_article_comment_id: children_id)
+      end
+    end`
 
 # URL
 https://argument-space.herokuapp.com/<br>画面上部のログインボタンよりログインをしていただくとコメントを投稿できるようになります。
