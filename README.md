@@ -13,17 +13,18 @@
 これを実現するために, 「>>n」というテキストを検出するためのコードをコントローラーに書き、検出されるとarticle_comment_repliesテーブル上に コメントのid,コメント先のidを登録させるように実装しました。
 そうする事で コメント = n番目のコメントへの返信 というように関連づける事ができました。
 
-```posted_comment = ArticleComment.create(comments_params)
-    length = ArticleComment.where(article_id: @article_id).length
-    posted_comment.update(index: length.to_i)
+```
+posted_comment = ArticleComment.create(comments_params)
+    length = ArticleComment.where(article_id: @article_id).length //登録されたコメントが記事に対する何番目のコメントなのか（インデックス）を変数に登録
+    posted_comment.update(index: length.to_i) //インデックスを登録
     parent_id = posted_comment.id
-    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq
+    anchors1 = posted_comment.text.scan(/(?<=\>>)\d+/).uniq //アンカーを検出
     if anchors1[0].present?
       anchors1.each do |a|
-        children = ArticleComment.find_by(article_id: @article_id, index: a)
+        children = ArticleComment.find_by(article_id: params[:article_id], index: a)
         children_id = children.id
         ArticleCommentReply.create(parent_article_comment_id: parent_id,
-                                   children_article_comment_id: children_id)
+                                   children_article_comment_id: children_id) //コメント先、投稿コメントのidをArticleCommentReplyテーブルに登録
       end
     end
 ```
